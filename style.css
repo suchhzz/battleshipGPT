@@ -1,0 +1,55 @@
+*{
+  margin:0px;
+  padding:0px;
+}
+body{
+  background-color: #2B2B2B;
+  height: 90vh;
+}
+.container{
+  width: 90%;
+  height: 90%;
+  margin: auto;
+  margin-top: 50px;
+  border: 1px solid black;
+  border-radius: 15px;
+  background-color: #1F1F1F;
+}
+.titleHolder{
+  padding-top: 30px;
+  text-align: center;
+  color: white;
+  margin: auto;
+}
+
+.board {
+  margin: auto;
+  margin-top: 30px;
+  border-collapse: collapse;
+}
+.cell {
+  width: 35px;
+  height: 35px;
+  border: 1px solid black;
+  background-color: #D9D9D9;
+}
+
+.shipsHolder{
+  width: 70%;
+  margin: auto;
+}
+.shipsHolder{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  margin-top: 40px;
+}
+.ship{
+  border-collapse: collapse;
+}
+.cellPast{
+  width: 35px;
+  height: 35px;
+  border: 1px solid white;
+  background-color: #6E6E6E;
+}
