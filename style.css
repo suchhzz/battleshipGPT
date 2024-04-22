@@ -53,3 +53,14 @@ body{
   border: 1px solid white;
   background-color: #6E6E6E;
 }
+
+
+.ship {
+  border-collapse: collapse;
+  width: auto; /* Позволяет кораблю занимать несколько ячеек */
+}
+
+
+.coloured{
+  background-color: blue;
+}
