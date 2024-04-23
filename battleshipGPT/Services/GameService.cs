@@ -51,10 +51,10 @@ namespace battleshipGPT.Services
             {
                 if (room.enemyHitCoordinates.Count != 0)
                 {
+                    var newEnemyCoords = generateRandomDirection(room.enemyHitCoordinates);
+
                     if (room.enemyHitCoordinates.Count == 1)
                     {
-                        var newEnemyCoords = generateRandomDirection(room.enemyHitCoordinates);
-
                         if (checkBorder(newEnemyCoords) && checkShipBorders(room, newEnemyCoords))
                         {
                             setPoint = true;
@@ -104,8 +104,85 @@ namespace battleshipGPT.Services
                     }
                 }
             }
+            else
+            {
+                bool border = true;
+
+                if (coordinates[0].X == coordinates[1].X)
+                {
+                    enemyCoordinates.X = coordinates[0].X;
+                    enemyCoordinates.Y = coordinates[0].Y;
+
+                    direction = rnd.Next(0, 2) == 0;
+
+                    if (direction)
+                    {
+                        while (border)
+                        {
+                            enemyCoordinates.Y++;
+
+                            if (!compareCoordinates(enemyCoordinates, coordinates))
+                            {
+                                border = false;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        while (border)
+                        {
+                            enemyCoordinates.Y--;
+
+                            if (!compareCoordinates(enemyCoordinates, coordinates))
+                            {
+                                border = false;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    enemyCoordinates.X = coordinates[0].X;
+                    enemyCoordinates.Y = coordinates[0].Y;
+
+                    direction = rnd.Next(0, 2) == 0;
+
+                    if (direction)
+                    {
+                        while (border)
+                        {
+                            enemyCoordinates.X++;
+
+                            if (!compareCoordinates(enemyCoordinates, coordinates))
+                            {
+                                border = false;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        while (border)
+                        {
+                            enemyCoordinates.X--;
+
+                            if (!compareCoordinates(enemyCoordinates, coordinates))
+                            {
+                                border = false;
+                            }
+                        }
+                    }
+                }
+            }
 
             return enemyCoordinates;
+        }
+        private bool compareCoordinates(Coordinates coords, List<Coordinates> userCoords)
+        {
+            return userCoords.Contains(coords);
+        }
+        private bool checkUserCoordinates(Room room, Coordinates coords)
+        {
+
         }
 
         private bool checkBorder(Coordinates coords)
@@ -115,7 +192,7 @@ namespace battleshipGPT.Services
 
         private bool checkShipBorders(Room room, Coordinates coords)
         {
-            return !(room.enemyUsedCoordinates.FirstOrDefault(c => c.X == coords.X && c.Y == coords.Y) != null);
+            return !(room.usedCoordinates.FirstOrDefault(c => c.X == coords.X && c.Y == coords.Y) != null);
         }
     }
 }

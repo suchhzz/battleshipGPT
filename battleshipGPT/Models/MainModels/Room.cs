@@ -10,8 +10,8 @@ namespace battleshipGPT.Models.MainModels
         public List<ShipModel> enemyShips { get; set; }
         public int enemyShipsRemaining { get; set; }
         public int userShipsRemaining { get; set; }
-        public List<Coordinates> userUsedCoordinates { get; set; }
-        public List<Coordinates> enemyUsedCoordinates { get; set; }
+        public List<Coordinates> usedCoordinates { get; set; }
+        public List<Coordinates> availableCoordinates { get; set; }
         public List<Coordinates> enemyHitCoordinates { get; set; }
     }
 }
