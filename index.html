@@ -12,7 +12,7 @@
     <div class="titleHolder"><h1>Your field</h1></div>
 
 
-    <table class="board">
+    <table class="board" id="playground">
       <tbody>
         <tr>
           <td data-row="0" data-col="0" class="cell"></td>
@@ -155,24 +155,24 @@
     <div class="shipsSelect">
 
       <div class="shipsHolder">
-        <table class="ship four-cell-ship"><tbody>
+        <table class="ship four-cell-ship" data-decks="4"><tbody>
           <tr>
-            <td data-row="y" data-col="x" class="cellPast"></td>
+            <td data-row-coloured="y" data-col-coloured="x" data-row="y" data-col="x" class="cellPast"></td>
+            <td data-row-coloured="y" data-col-coloured="x" data-row="y" data-col="x" class="cellPast"></td>
+            <td data-row-coloured="y" data-col-coloured="x" data-row="y" data-col="x" class="cellPast"></td>
+            <td data-row-coloured="y" data-col-coloured="x" data-row="y" data-col="x" class="cellPast"></td>
+          </tr>
+        </tbody></table>
+
+        <table class="ship three-cell-ship" data-decks="3"><tbody>
+          <tr>
             <td data-row="y" data-col="x" class="cellPast"></td>
             <td data-row="y" data-col="x" class="cellPast"></td>
             <td data-row="y" data-col="x" class="cellPast"></td>
           </tr>
         </tbody></table>
 
-        <table class="ship three-cell-ship"><tbody>
-          <tr>
-            <td data-row="y" data-col="x" class="cellPast"></td>
-            <td data-row="y" data-col="x" class="cellPast"></td>
-            <td data-row="y" data-col="x" class="cellPast"></td>
-          </tr>
-        </tbody></table>
-
-        <table class="ship three-cell-ship"><tbody>
+        <table class="ship three-cell-ship" data-decks="3"><tbody>
           <tr>
             <td data-row="y" data-col="x" class="cellPast"></td>
             <td data-row="y" data-col="x" class="cellPast"></td>
@@ -185,21 +185,21 @@
 
 
       <div class="shipsHolder">
-        <table class="ship two-cell-ship"><tbody>
+        <table class="ship two-cell-ship" data-decks="2"><tbody>
           <tr>
             <td data-row="y" data-col="x" class="cellPast"></td>
             <td data-row="y" data-col="x" class="cellPast"></td>
           </tr>
         </tbody></table>
 
-        <table class="ship two-cell-ship"><tbody>
+        <table class="ship two-cell-ship" data-decks="2"><tbody>
           <tr>
             <td data-row="y" data-col="x" class="cellPast"></td>
             <td data-row="y" data-col="x" class="cellPast"></td>
           </tr>
         </tbody></table>
 
-        <table class="ship two-cell-ship"><tbody>
+        <table class="ship two-cell-ship" data-decks="2"><tbody>
           <tr>
             <td data-row="y" data-col="x" class="cellPast"></td>
             <td data-row="y" data-col="x" class="cellPast"></td>
@@ -208,25 +208,25 @@
       </div>
 
       <div class="shipsHolder">
-        <table class="ship one-cell-ship"><tbody>
+        <table class="ship one-cell-ship" data-decks="1"><tbody>
           <tr>
             <td data-row="y" data-col="x" class="cellPast"></td>
           </tr>
         </tbody></table>
         
-        <table class="ship one-cell-ship"><tbody>
+        <table class="ship one-cell-ship" data-decks="1"><tbody>
           <tr>
             <td data-row="y" data-col="x" class="cellPast"></td>
           </tr>
         </tbody></table>
 
-        <table class="ship one-cell-ship"><tbody>
+        <table class="ship one-cell-ship" data-decks="1"><tbody>
           <tr>
             <td data-row="y" data-col="x" class="cellPast"></td>
           </tr>
         </tbody></table>
 
-        <table class="ship one-cell-ship"><tbody>
+        <table class="ship one-cell-ship" data-decks="1"><tbody>
           <tr>
             <td data-row="y" data-col="x" class="cellPast"></td>
           </tr>
