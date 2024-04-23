@@ -1,4 +1,5 @@
-﻿using battleshipGPT.Models;
+﻿using battleshipGPT.Models.GameModels;
+using battleshipGPT.Models.MainModels;
 using battleshipGPT.Services;
 
 namespace battleshipGPT.Serives
@@ -7,11 +8,11 @@ namespace battleshipGPT.Serives
     {
         public List<Room> rooms = new List<Room>();
 
-        public void CreateRoom(Guid userId, Guid roomId)
+        public void CreateRoom(User user, Guid roomId)
         {
             rooms.Add(new Room
             {
-                UserId = userId,
+                User = user,
                 RoomId = roomId,
                 userShips = new List<ShipModel>(),
                 enemyShips = new List<ShipModel>(),

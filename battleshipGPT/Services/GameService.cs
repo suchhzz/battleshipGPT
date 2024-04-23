@@ -1,147 +1,121 @@
-﻿using battleshipGPT.Models;
-using System.Reflection.Metadata.Ecma335;
+﻿using battleshipGPT.Models.GameModels;
+using battleshipGPT.Models.MainModels;
 
 namespace battleshipGPT.Services
 {
     public class GameService
     {
-        public void SetShip(Room room, int headX, int headY, int deck, bool horizontal)
+        public void SetPoint(Room room, int x, int y)
         {
-            ShipModel ship = new ShipModel();
+            var selectedShip = IsShipHit(room.enemyShips, x, y);
 
-            ship.Deck = deck;
-            ship.DeckRemaining = deck;
-            ship.Horizontal = horizontal;
+            if (selectedShip != null)
+            {
+                room.enemyShipsRemaining--;
+            }
 
-            ship.Coords = CreateShip(headX, headY, ship);
+            room.enemyUsedCoordinates.Add(new Coordinates { X = x, Y = y });
 
-            room.userShips.Add(ship);
         }
 
-        private List<Coordinates> CreateShip(int headX, int headY, ShipModel ship)
+        private ShipModel IsShipHit(List<ShipModel> enemyShips, int x, int y)
         {
-            List<Coordinates> newCoords = new List<Coordinates>(); 
+            ShipModel hittedShipModel = null;
 
-            for (int i = 0; i < ship.Deck; i++)
+            foreach (var ship in enemyShips)
             {
-                newCoords.Add(new Coordinates { X = headX, Y = headY });
-
-                if (ship.Horizontal)
+                foreach (var coordinates in ship.Coords)
                 {
-                    headX++;
+                    if (coordinates.X == x && coordinates.Y == y)
+                    {
+                        hittedShipModel = ship;
+
+                        hittedShipModel.DeckRemaining--;
+
+                        if (hittedShipModel.DeckRemaining == 0)
+                        {
+                            hittedShipModel.Destroyed = true;
+                        }
+                    }
+                }
+            }
+
+            return hittedShipModel;
+        }
+
+        public void EnemySetPoint(Room room)
+        {
+            bool setPoint = false;
+
+            while (!setPoint)
+            {
+                if (room.enemyHitCoordinates.Count != 0)
+                {
+                    if (room.enemyHitCoordinates.Count == 1)
+                    {
+                        var newEnemyCoords = generateRandomDirection(room.enemyHitCoordinates);
+
+                        if (checkBorder(newEnemyCoords) && checkShipBorders(room, newEnemyCoords))
+                        {
+                            setPoint = true;
+                        }
+                    }
+                }
+            }
+        }
+
+        private Coordinates generateRandomDirection(List<Coordinates> coordinates)
+        {
+            var rnd = new Random();
+
+            var enemyCoordinates = new Coordinates();
+
+            bool horizontal = true;
+            bool direction = true;
+
+            if (coordinates.Count == 1)
+            {
+                horizontal = rnd.Next(0, 2) == 0;
+
+                if (horizontal)
+                {
+                    direction = rnd.Next(0, 2) == 0;
+
+                    if (direction)
+                    {
+                        enemyCoordinates.X--;
+                    }
+                    else
+                    {
+                        enemyCoordinates.X++;
+                    }
                 }
                 else
                 {
-                    headY++;
-                }
-            }
-            return newCoords;
-        }
+                    direction = rnd.Next(0, 2) == 0;
 
-        public List<ShipModel> CreateEnemyShips(Room room)
-        {
-            List<ShipModel> enemyShips = new List<ShipModel>();
-
-            enemyShips.Add(PlaceShip(room, 4));
-            enemyShips.Add(PlaceShip(room, 3));
-            enemyShips.Add(PlaceShip(room, 3));
-            enemyShips.Add(PlaceShip(room, 2));
-            enemyShips.Add(PlaceShip(room, 2));
-            enemyShips.Add(PlaceShip(room, 2));
-            enemyShips.Add(PlaceShip(room, 1));
-            enemyShips.Add(PlaceShip(room, 1));
-            enemyShips.Add(PlaceShip(room, 1));
-            enemyShips.Add(PlaceShip(room, 1));
-
-            return enemyShips;
-        }
-
-        private ShipModel PlaceShip(Room room, int deck)
-        {
-            ShipModel ship = new ShipModel();
-
-            var rnd = new Random();
-
-            bool placed = false;
-
-            ship.Deck = ship.DeckRemaining = deck;
-
-            while (!placed)
-            {
-                ship.Coords = new List<Coordinates> 
-                { new Coordinates
+                    if (direction)
                     {
-                        X = rnd.Next(0, 10),
-                        Y = rnd.Next(0, 10)
-                    } 
-                };
-                ship.Horizontal = rnd.Next(0, 2) == 0;
-                
-                if (CheckPlaygroundBorder(ship))
-                {
-                    ship.Coords = CreateShip(ship.Coords[0].X, ship.Coords[0].Y, ship);
-
-                    if (CheckOtherShipsBorder(ship, room))
-                    {
-                        placed = true;
+                        enemyCoordinates.Y--;
                     }
-                }
-
-            }
-
-            return ship;
-        }
-
-        private bool CheckPlaygroundBorder(ShipModel ship)
-        {
-            if (ship.Horizontal)
-            {
-                return ship.Coords[0].X + ship.Deck - 1 <= 9;
-            }
-            else
-            {
-                return ship.Coords[0].Y + ship.Deck - 1 <= 9;
-            }
-        }
-
-        private bool CheckOtherShipsBorder(ShipModel ship, Room room)
-        {
-            int currentX;
-            int currentY;
-
-            for (int i = 0; i < ship.Deck; i++)
-            {
-                currentX = ship.Coords[i].X;
-                currentY = ship.Coords[i].Y;
-
-                if (CompareShips(currentX, currentY, room)) { return false; }
-                if (CompareShips(currentX, currentY - 1, room)) { return false; }
-                if (CompareShips(currentX, currentY + 1, room)) { return false; }
-                if (CompareShips(currentX - 1, currentY, room)) { return false; }
-                if (CompareShips(currentX + 1, currentY, room)) { return false; }
-                if (CompareShips(currentX - 1, currentY - 1, room)) { return false; }
-                if (CompareShips(currentX + 1, currentY + 1, room)) { return false; }
-                if (CompareShips(currentX + 1, currentY - 1, room)) { return false; }
-                if (CompareShips(currentX + 1, currentY - 1, room)) { return false; }
-            }
-
-            return true;
-        }
-
-        private bool CompareShips(int x, int y, Room room)
-        {
-            for (int i = 0; i < room.enemyShips.Count; i++)
-            {
-                for (int j = 0; i < room.enemyShips[i].Coords.Count; j++)
-                {
-                    if (room.enemyShips[i].Coords[j].X == x && room.enemyShips[i].Coords[j].Y == y)
+                    else
                     {
-                        return true;
+                        enemyCoordinates.Y++;
                     }
                 }
             }
 
-            return false;
+            return enemyCoordinates;
+        }
+
+        private bool checkBorder(Coordinates coords)
+        {
+            return coords.X <= 9 && coords.X >= 0 && coords.Y <= 9 && coords.X >= 0;
+        }
+
+        private bool checkShipBorders(Room room, Coordinates coords)
+        {
+            return !(room.enemyUsedCoordinates.FirstOrDefault(c => c.X == coords.X && c.Y == coords.Y) != null);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace battleshipGPT.Models
+﻿namespace battleshipGPT.Models.GameModels
 {
     public class Coordinates
     {

@@ -10,7 +10,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddSignalR();
 
 builder.Services.AddSingleton<RoomService>();
-builder.Services.AddSingleton<GameService>();
+builder.Services.AddSingleton<ShipChooseService>();
 
 var app = builder.Build();
 
@@ -34,4 +34,6 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.MapHub<ShipChooseHub>("/choose");
+app.MapHub<GameHub>("/game");
+
 app.Run();
