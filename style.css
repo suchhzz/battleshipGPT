@@ -50,16 +50,17 @@ body{
 .cellPast{
   width: 35px;
   height: 35px;
-  border: 1px solid white;
   background-color: #6E6E6E;
 }
 
+.colouredCells{
+  background-color: gray !important;
+}
 
 .ship {
   border-collapse: collapse;
   width: auto; /* Позволяет кораблю занимать несколько ячеек */
 }
-
 
 .coloured{
   background-color: blue;
