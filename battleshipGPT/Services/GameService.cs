@@ -7,14 +7,15 @@ namespace battleshipGPT.Services
     {
         public void SetPoint(Room room, int x, int y)
         {
-            var selectedShip = IsShipHit(room.enemyShips, x, y);
+            var selectedShip = IsShipHit(room.enemy.EnemyShips, x, y);
 
             if (selectedShip != null)
             {
-                room.enemyShipsRemaining--;
+                room.enemy.EnemyShipsRemaining--;
             }
 
-            room.enemyUsedCoordinates.Add(new Coordinates { X = x, Y = y });
+            room.enemy.UsedCoordinates.Add(new Coordinates { X = x, Y = y });
+            room.enemy.AvailableCoordinates.Remove(new Coordinates { X = x, Y = y });
 
         }
 
@@ -49,11 +50,11 @@ namespace battleshipGPT.Services
 
             while (!setPoint)
             {
-                if (room.enemyHitCoordinates.Count != 0)
+                if (room.enemy.EnemyHitCoordinates.Count != 0)
                 {
-                    var newEnemyCoords = generateRandomDirection(room.enemyHitCoordinates);
+                    var newEnemyCoords = generateRandomDirection(room.enemy.EnemyHitCoordinates);
 
-                    if (room.enemyHitCoordinates.Count == 1)
+                    if (room.enemy.EnemyHitCoordinates.Count == 1)
                     {
                         if (checkBorder(newEnemyCoords) && checkShipBorders(room, newEnemyCoords))
                         {
@@ -180,9 +181,9 @@ namespace battleshipGPT.Services
         {
             return userCoords.Contains(coords);
         }
-        private bool checkUserCoordinates(Room room, Coordinates coords)
+        private bool availableCoordinate(Room room, Coordinates coords) // свободна ли ячейка
         {
-
+            return !room.enemy.UsedCoordinates.Contains(coords);
         }
 
         private bool checkBorder(Coordinates coords)
@@ -192,7 +193,7 @@ namespace battleshipGPT.Services
 
         private bool checkShipBorders(Room room, Coordinates coords)
         {
-            return !(room.usedCoordinates.FirstOrDefault(c => c.X == coords.X && c.Y == coords.Y) != null);
+            return !(room.enemy.UsedCoordinates.FirstOrDefault(c => c.X == coords.X && c.Y == coords.Y) != null);
         }
     }
 }

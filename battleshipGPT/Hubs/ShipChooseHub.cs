@@ -1,5 +1,7 @@
 ﻿using battleshipGPT.Models;
+using battleshipGPT.Models.GameModels;
 using battleshipGPT.Models.MainModels;
+using battleshipGPT.Models.PlayersModel;
 using battleshipGPT.Serives;
 using battleshipGPT.Services;
 using Microsoft.AspNetCore.SignalR;
@@ -17,13 +19,19 @@ namespace battleshipGPT.Hubs
         }
         public async Task SetUsersParameters()
         {
-            User user = new User();
+            Player player = new Player
+            {
+                Id = Guid.NewGuid(),
+                PlayerShips = new List<ShipModel>(),
+                PlayerShipsRemaining = 0
+            };
+
             Guid roomId = Guid.NewGuid();
 
-            _roomService.CreateRoom(user, roomId);
+            _roomService.CreateRoom(player, roomId);
 
             await Groups.AddToGroupAsync(Context.ConnectionId, roomId.ToString());
-            await Clients.Caller.SendAsync("SetParameters", user, roomId);
+            await Clients.Caller.SendAsync("SetParameters", player.Id, roomId);
         }
 
         public async Task SetShip(string roomId, int headX, int headY, int deck, bool horizontal)
@@ -42,7 +50,7 @@ namespace battleshipGPT.Hubs
 
             if (currentRoom != null)
             {
-                currentRoom.enemyShips = _shipChooseService.CreateEnemyShips(currentRoom);
+                currentRoom.enemy.EnemyShips = _shipChooseService.CreateEnemyShips(currentRoom);
             }
 
             await Clients.Group(roomId).SendAsync("StartGame");

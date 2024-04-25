@@ -16,7 +16,7 @@ namespace battleshipGPT.Services
 
             ship.Coords = CreateShip(headX, headY, ship);
 
-            room.userShips.Add(ship);
+            room.Player.PlayerShips.Add(ship);
         }
 
         private List<Coordinates> CreateShip(int headX, int headY, ShipModel ship)
@@ -54,7 +54,7 @@ namespace battleshipGPT.Services
             enemyShips.Add(PlaceShip(room, 1));
             enemyShips.Add(PlaceShip(room, 1));
 
-            room.enemyShipsRemaining = 10;
+            room.enemy.EnemyShipsRemaining = 10;
 
             return enemyShips;
         }
@@ -62,8 +62,6 @@ namespace battleshipGPT.Services
         private ShipModel PlaceShip(Room room, int deck)
         {
             ShipModel ship = new ShipModel();
-
-            ship.HitCoords = new List<Coordinates>();
 
             var rnd = new Random();
 
@@ -135,11 +133,11 @@ namespace battleshipGPT.Services
 
         private bool CompareShips(int x, int y, Room room)
         {
-            for (int i = 0; i < room.enemyShips.Count; i++)
+            for (int i = 0; i < room.enemy.EnemyShips.Count; i++)
             {
-                for (int j = 0; i < room.enemyShips[i].Coords.Count; j++)
+                for (int j = 0; i < room.enemy.EnemyShips[i].Coords.Count; j++)
                 {
-                    if (room.enemyShips[i].Coords[j].X == x && room.enemyShips[i].Coords[j].Y == y)
+                    if (room.enemy.EnemyShips[i].Coords[j].X == x && room.enemy.EnemyShips[i].Coords[j].Y == y)
                     {
                         return true;
                     }

@@ -1,5 +1,6 @@
 ﻿using battleshipGPT.Models.GameModels;
 using battleshipGPT.Models.MainModels;
+using battleshipGPT.Models.PlayersModel;
 using battleshipGPT.Services;
 
 namespace battleshipGPT.Serives
@@ -8,17 +9,21 @@ namespace battleshipGPT.Serives
     {
         public List<Room> rooms = new List<Room>();
 
-        public void CreateRoom(User user, Guid roomId)
+        public void CreateRoom(Player player, Guid roomId)
         {
             rooms.Add(new Room
             {
-                User = user,
+                Player = player,
                 RoomId = roomId,
-                userShips = new List<ShipModel>(),
-                enemyShips = new List<ShipModel>(),
-                userUsedCoordinates = new List<Coordinates>(),
-                enemyUsedCoordinates = new List<Coordinates>()
-            }) ;
+                enemy = new Enemy
+                {
+                    EnemyShips = new List<ShipModel>(),
+                    UsedCoordinates = new List<Coordinates>(),
+                    AvailableCoordinates = new List<Coordinates>(),
+                    EnemyHitCoordinates = new List<Coordinates>(),
+                    EnemyShipsRemaining = 0
+                }
+            });
         }
 
         public Room GetRoomById(Guid roomId)
