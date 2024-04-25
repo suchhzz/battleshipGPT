@@ -36,7 +36,19 @@ body{
   padding: 15px 30px;
   display: none;
 }
-
+.rotateShip{
+  text-decoration: none;
+  color: white;
+  text-align: center;
+  font-size: 25px;
+  background-color: rgb(97, 66, 66);
+  margin: auto;
+  width: 20%;
+  border-radius: 20px;
+  padding: 15px 30px;
+  cursor: pointer;
+  user-select: none;
+}
 .board {
   margin: auto;
   margin-top: 30px;
@@ -58,6 +70,9 @@ body{
   flex-direction: row;
   justify-content: space-evenly;
   margin-top: 40px;
+}
+.shipsHolder .ship{
+  cursor: pointer;
 }
 .ship{
   border-collapse: collapse;
