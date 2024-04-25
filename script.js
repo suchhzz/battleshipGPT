@@ -1,17 +1,31 @@
 document.addEventListener("DOMContentLoaded", function() {
   const ships = document.querySelectorAll('.ship');
   const cells = document.querySelectorAll('.cell');
+  const playgroundTable = document.getElementById("playground");
+  const playButt = document.querySelector('.playButt')
   let selectedShip = null;
   let fourCellShipCount = 0;
   let threeCellShipCount = 0;
   let twoCellShipCount = 0;
   let oneCellShipCount = 0;
   let currentDeck = 0;
+  let placedShipCount = 0;
+  const totalShipCount = 10;
+
+  // чек ли разместил все корабли
+  function checkAllShipsPlaced() {
+    if (placedShipCount === totalShipCount) {
+      console.log('Игрок разместил все корабли!');
+      playButt.style.display = 'block'
+      
+    }
+  }
 
   // корабль в выбраную ячейку перемещаем
   function moveShipToCell() {
     const row = parseInt(this.getAttribute('data-row'));
     const col = parseInt(this.getAttribute('data-col'));
+    placedShipCount++;
     
 
     // Запрет на корабль рядом уже с стоящим кораблем
@@ -88,7 +102,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
       }
 
-      let playgroundTable = document.getElementById("playground");
+      
 
       let currentRow = row;
       let currentCol = col;
@@ -104,6 +118,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
           oldCell.replaceWith(currentCell);
 
+          oldCell.classList.add('occupied')
+
           currentCol++;
         }
         
@@ -111,6 +127,7 @@ document.addEventListener("DOMContentLoaded", function() {
       console.log(`Корабль поставлен на ряду ${row}, и в ячейке ${col}`);
       this.classList.add('occupied');
       resetColouredCells();
+      checkAllShipsPlaced()
     } 
   }
 
@@ -155,14 +172,43 @@ document.addEventListener("DOMContentLoaded", function() {
       selectedShip.classList.add('selected-ship');
       currentDeck = ship.getAttribute('data-decks');
 
+
     console.log('кол-во палуб: ' + currentDeck);
     });
   });
+
+
+
+
+  // Проверка, принадлежит ли корабль к playgroundTable
+  
+
+
+
+
 
   // сброс выбраного корабля на клик за пределами поля
   document.addEventListener('click', function() {
     resetColouredCells();
     selectedShip = null;
   });
+
+  
+  
+  
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
 });
 

@@ -16,10 +16,25 @@ body{
   background-color: #1F1F1F;
 }
 .titleHolder{
+  display: flex;
+  flex-direction: column;
+  gap:20px;
   padding-top: 30px;
   text-align: center;
   color: white;
   margin: auto;
+}
+.playButt{
+  text-decoration: none;
+  color: white;
+  text-align: center;
+  font-size: 25px;
+  background-color: pink;
+  margin: auto;
+  width: 20%;
+  border-radius: 20px;
+  padding: 15px 30px;
+  display: none;
 }
 
 .board {
@@ -35,7 +50,7 @@ body{
 }
 
 .shipsHolder{
-  width: 70%;
+  width: 80%;
   margin: auto;
 }
 .shipsHolder{
