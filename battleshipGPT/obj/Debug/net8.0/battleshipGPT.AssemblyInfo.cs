@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("battleshipGPT")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+076b96cec7689e6233cc6eab630d868e5a2a3b08")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4acbfc613b2ae4efb73b70abb5dff22f240c55c2")]
 [assembly: System.Reflection.AssemblyProductAttribute("battleshipGPT")]
 [assembly: System.Reflection.AssemblyTitleAttribute("battleshipGPT")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

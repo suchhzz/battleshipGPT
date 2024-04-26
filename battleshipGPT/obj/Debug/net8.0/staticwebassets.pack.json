@@ -5,6 +5,10 @@
       "PackagePath": "staticwebassets\\battleshipGPT.bundle.scp.css"
     },
     {
+      "Id": "C:\\Users\\jenje\\source\\repos\\battleshipGPT\\battleshipGPT\\wwwroot\\css\\second-part.css",
+      "PackagePath": "staticwebassets\\css\\second-part.css"
+    },
+    {
       "Id": "C:\\Users\\jenje\\source\\repos\\battleshipGPT\\battleshipGPT\\wwwroot\\css\\site.css",
       "PackagePath": "staticwebassets\\css\\site.css"
     },
