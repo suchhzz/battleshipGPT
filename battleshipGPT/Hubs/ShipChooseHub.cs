@@ -46,6 +46,11 @@ namespace battleshipGPT.Hubs
             }
 
             _logger.LogInformation($"player ships: {currentRoom.Player.PlayerShips.Count}");
+
+            if (currentRoom.Player.PlayerShipsRemaining >= 0)
+            {
+                await CreateEnemyPlayground(currentRoom.RoomId.ToString());
+            }
         }
 
         public async Task CreateEnemyPlayground(string roomId)
@@ -54,7 +59,11 @@ namespace battleshipGPT.Hubs
 
             if (currentRoom != null)
             {
-                currentRoom.enemy.EnemyShips = _shipChooseService.CreateEnemyShips(currentRoom);
+                _logger.LogInformation("generating enemy field..");
+
+                _shipChooseService.CreateEnemyShips(currentRoom);
+
+                fillEnemyPlayground(currentRoom);
             }
 
             await Clients.Group(roomId).SendAsync("StartGame");
@@ -63,6 +72,44 @@ namespace battleshipGPT.Hubs
         public async Task Test(string roomId)
         {
             _logger.LogInformation("test method has been invoked, roomId: " + roomId);
+        }
+
+        private char[,] enemyPlayground = new char[10, 10];
+        private void fillEnemyPlayground(Room room)
+        {
+            for (int i = 0; i < enemyPlayground.GetLength(0); i++)
+            {
+                for (int j = 0; j < enemyPlayground.GetLength(1); j++)
+                {
+                    enemyPlayground[i, j] = '-';
+                }
+            }
+
+            for (int i = 0; i < room.enemy.EnemyShips.Count; i++)
+            {
+                for (int j = 0; j < room.enemy.EnemyShips[i].Coords.Count; j++)
+                {
+                    enemyPlayground[room.enemy.EnemyShips[i].Coords[j].Y, room.enemy.EnemyShips[i].Coords[j].X] = '*';
+                }
+            }
+
+            showLogPlayground();
+        }
+        private void showLogPlayground()
+        {
+            string logOutput = "";
+
+            for (int i = 0; i < enemyPlayground.GetLength(0); i++)
+            {
+                for (int j = 0; j < enemyPlayground.GetLength(1); j++)
+                {
+                    logOutput += enemyPlayground[i, j] + " ";
+                }
+                logOutput += "\n";
+            }
+
+            _logger.LogInformation("enemy playground generated\n"
+                                  + logOutput);
         }
     }
 }

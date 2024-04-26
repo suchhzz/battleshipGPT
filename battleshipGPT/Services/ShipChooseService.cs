@@ -53,24 +53,22 @@ namespace battleshipGPT.Services
             return newCoords;
         }
 
-        public List<ShipModel> CreateEnemyShips(Room room)
+        public void CreateEnemyShips(Room room)
         {
-            List<ShipModel> enemyShips = new List<ShipModel>();
+            room.enemy.EnemyShips = new List<ShipModel>();
 
-            enemyShips.Add(PlaceShip(room, 4));
-            enemyShips.Add(PlaceShip(room, 3));
-            enemyShips.Add(PlaceShip(room, 3));
-            enemyShips.Add(PlaceShip(room, 2));
-            enemyShips.Add(PlaceShip(room, 2));
-            enemyShips.Add(PlaceShip(room, 2));
-            enemyShips.Add(PlaceShip(room, 1));
-            enemyShips.Add(PlaceShip(room, 1));
-            enemyShips.Add(PlaceShip(room, 1));
-            enemyShips.Add(PlaceShip(room, 1));
+            room.enemy.EnemyShips.Add(PlaceShip(room, 4));
+            room.enemy.EnemyShips.Add(PlaceShip(room, 3));
+            room.enemy.EnemyShips.Add(PlaceShip(room, 3));
+            room.enemy.EnemyShips.Add(PlaceShip(room, 2));
+            room.enemy.EnemyShips.Add(PlaceShip(room, 2));
+            room.enemy.EnemyShips.Add(PlaceShip(room, 2));
+            room.enemy.EnemyShips.Add(PlaceShip(room, 1));
+            room.enemy.EnemyShips.Add(PlaceShip(room, 1));
+            room.enemy.EnemyShips.Add(PlaceShip(room, 1));
+            room.enemy.EnemyShips.Add(PlaceShip(room, 1));
 
             room.enemy.EnemyShipsRemaining = 10;
-
-            return enemyShips;
         }
 
         private ShipModel PlaceShip(Room room, int deck)
@@ -149,7 +147,7 @@ namespace battleshipGPT.Services
         {
             for (int i = 0; i < room.enemy.EnemyShips.Count; i++)
             {
-                for (int j = 0; i < room.enemy.EnemyShips[i].Coords.Count; j++)
+                for (int j = 0; j < room.enemy.EnemyShips[i].Coords.Count; j++)
                 {
                     if (room.enemy.EnemyShips[i].Coords[j].X == x && room.enemy.EnemyShips[i].Coords[j].Y == y)
                     {
