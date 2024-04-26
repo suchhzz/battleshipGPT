@@ -13,11 +13,13 @@ namespace battleshipGPT.Hubs
         private readonly ILogger<ShipChooseHub> _logger;
         private readonly ShipChooseService _shipChooseService;
         private readonly RoomService _roomService;
-        public ShipChooseHub(RoomService roomService, ShipChooseService shipChooseService, ILogger<ShipChooseHub> logger)
+        private readonly LogService _logService;
+        public ShipChooseHub(RoomService roomService, ShipChooseService shipChooseService, ILogger<ShipChooseHub> logger, LogService logService)
         {
             _roomService = roomService;
             _shipChooseService = shipChooseService;
             _logger = logger;
+            _logService = logService;
         }
         public async Task SetUsersParameters()
         {
@@ -47,7 +49,7 @@ namespace battleshipGPT.Hubs
 
             _logger.LogInformation($"player ships: {currentRoom.Player.PlayerShips.Count}");
 
-            if (currentRoom.Player.PlayerShipsRemaining >= 0)
+            if (currentRoom.Player.PlayerShips.Count >= 10)
             {
                 await CreateEnemyPlayground(currentRoom.RoomId.ToString());
             }
@@ -60,11 +62,17 @@ namespace battleshipGPT.Hubs
             if (currentRoom != null)
             {
                 _logger.LogInformation("generating enemy field..");
-
                 _shipChooseService.CreateEnemyShips(currentRoom);
 
-                fillEnemyPlayground(currentRoom);
+
+                _logger.LogInformation("\n\nenemy field:");
+                _logService.showField(currentRoom.enemy.EnemyShips, "enemy");
+
+
+                _logger.LogInformation("\n\nplayer`s field:");
+                _logService.showField(currentRoom.Player.PlayerShips, "player");
             }
+
 
             await Clients.Group(roomId).SendAsync("StartGame");
         }
@@ -74,42 +82,6 @@ namespace battleshipGPT.Hubs
             _logger.LogInformation("test method has been invoked, roomId: " + roomId);
         }
 
-        private char[,] enemyPlayground = new char[10, 10];
-        private void fillEnemyPlayground(Room room)
-        {
-            for (int i = 0; i < enemyPlayground.GetLength(0); i++)
-            {
-                for (int j = 0; j < enemyPlayground.GetLength(1); j++)
-                {
-                    enemyPlayground[i, j] = '-';
-                }
-            }
-
-            for (int i = 0; i < room.enemy.EnemyShips.Count; i++)
-            {
-                for (int j = 0; j < room.enemy.EnemyShips[i].Coords.Count; j++)
-                {
-                    enemyPlayground[room.enemy.EnemyShips[i].Coords[j].Y, room.enemy.EnemyShips[i].Coords[j].X] = '*';
-                }
-            }
-
-            showLogPlayground();
-        }
-        private void showLogPlayground()
-        {
-            string logOutput = "";
-
-            for (int i = 0; i < enemyPlayground.GetLength(0); i++)
-            {
-                for (int j = 0; j < enemyPlayground.GetLength(1); j++)
-                {
-                    logOutput += enemyPlayground[i, j] + " ";
-                }
-                logOutput += "\n";
-            }
-
-            _logger.LogInformation("enemy playground generated\n"
-                                  + logOutput);
-        }
+        
     }
 }

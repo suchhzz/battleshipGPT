@@ -11,6 +11,7 @@ builder.Services.AddSignalR();
 
 builder.Services.AddSingleton<RoomService>();
 builder.Services.AddSingleton<ShipChooseService>();
+builder.Services.AddSingleton<LogService>();
 
 var app = builder.Build();
 
