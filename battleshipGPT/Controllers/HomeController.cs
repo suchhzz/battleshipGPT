@@ -23,7 +23,7 @@ namespace battleshipGPT.Controllers
         {
             _logger.LogInformation("roomId: " + roomId); 
 
-            return View(roomId);
+            return View("Battleship", roomId);
         }
 
         public IActionResult Privacy()
