@@ -235,6 +235,9 @@
     </div>
   </div>
 
+    <form id="roomIdForm" asp-controller="Home" asp-action="Battleship" method="post">
+        <input type="hidden" id="roomIdInput" name="roomId" value="" />
+    </form>
 
 
   <script src="~/js/script.js"></script>
@@ -263,6 +266,11 @@
 
                     console.log("user id: " + userId);
                     console.log("room id: " + roomId);
+                });
+
+                hubConnection.on("StartGame", function () {
+                    document.getElementById("roomIdInput").value = roomId;
+                    document.getElementById("roomIdForm").submit();
                 });
 
                 hubConnection.invoke("SetUsersParameters");

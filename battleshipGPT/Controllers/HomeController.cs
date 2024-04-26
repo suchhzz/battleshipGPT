@@ -18,6 +18,14 @@ namespace battleshipGPT.Controllers
             return View();
         }
 
+        [HttpPost]
+        public IActionResult Battleship(string roomId)
+        {
+            _logger.LogInformation("roomId: " + roomId); 
+
+            return View(roomId);
+        }
+
         public IActionResult Privacy()
         {
             return View();
