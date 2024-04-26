@@ -1,17 +1,33 @@
 document.addEventListener("DOMContentLoaded", function() {
   const ships = document.querySelectorAll('.ship');
   const cells = document.querySelectorAll('.cell');
+  const playgroundTable = document.getElementById("playground");
+  const playButt = document.querySelector('.playButt')
+  const rotateShipButt = document.querySelector('.rotateShip')
   let selectedShip = null;
   let fourCellShipCount = 0;
   let threeCellShipCount = 0;
   let twoCellShipCount = 0;
   let oneCellShipCount = 0;
   let currentDeck = 0;
+  let placedShipCount = 0;
+  const totalShipCount = 10;
+  let rotate = false;
+
+  // чек ли разместил все корабли
+  function checkAllShipsPlaced() {
+    if (placedShipCount === totalShipCount) {
+      console.log('Игрок разместил все корабли!');
+      playButt.style.display = 'block'
+      
+    }
+  }
 
   // корабль в выбраную ячейку перемещаем
   function moveShipToCell() {
     const row = parseInt(this.getAttribute('data-row'));
     const col = parseInt(this.getAttribute('data-col'));
+    placedShipCount++;
     
 
     // Запрет на корабль рядом уже с стоящим кораблем
@@ -88,29 +104,59 @@ document.addEventListener("DOMContentLoaded", function() {
         }
       }
 
-      let playgroundTable = document.getElementById("playground");
+      
 
       let currentRow = row;
       let currentCol = col;
+      
 
-      for (let i = 0; i < currentDeck; i++) {
+      
 
-          let currentCell = document.createElement('td');
-          currentCell.setAttribute('data-row', currentRow);
-          currentCell.setAttribute('data-col', currentCol);
-          currentCell.classList.add('cellPast');
+      if (!rotate) {
+        for (let i = 0; i < currentDeck; i++) {
 
-          let oldCell = playgroundTable.querySelector(`[data-row="${currentRow}"][data-col="${currentCol}"]`);
+          
+            let currentCell = document.createElement('td');
+            currentCell.setAttribute('data-row', currentRow);
+            currentCell.setAttribute('data-col', currentCol);
+            currentCell.classList.add('cellPast');
 
-          oldCell.replaceWith(currentCell);
+            let oldCell = playgroundTable.querySelector(`[data-row="${currentRow}"][data-col="${currentCol}"]`);
 
-          currentCol++;
-        }
+            oldCell.replaceWith(currentCell);
+
+            
+            oldCell.classList.add('occupied')
+
+            currentCol++;
+          }
+      } else {
+        for (let i = 0; i < currentDeck; i++) {
+
+          
+            let currentCell = document.createElement('td');
+            currentCell.setAttribute('data-row', currentRow);
+            currentCell.setAttribute('data-col', currentCol);
+            currentCell.classList.add('cellPast');
+
+            let oldCell = playgroundTable.querySelector(`[data-row="${currentRow}"][data-col="${currentCol}"]`);
+
+            oldCell.replaceWith(currentCell);
+
+            
+            oldCell.classList.add('occupied')
+
+            currentRow++;
+          }
+      }
+      
+
         
 
       console.log(`Корабль поставлен на ряду ${row}, и в ячейке ${col}`);
       this.classList.add('occupied');
       resetColouredCells();
+      checkAllShipsPlaced()
     } 
   }
 
@@ -155,14 +201,46 @@ document.addEventListener("DOMContentLoaded", function() {
       selectedShip.classList.add('selected-ship');
       currentDeck = ship.getAttribute('data-decks');
 
+
     console.log('кол-во палуб: ' + currentDeck);
     });
   });
+
+  rotateShipButt.addEventListener('click', ()=>{
+    if (!rotate) {
+      rotate = true;
+      console.log('Корабли теперь перевернутые');
+    } else {
+      rotate = false;
+      console.log('Корабли теперь нормальные');
+    }
+  })
+
+
+
 
   // сброс выбраного корабля на клик за пределами поля
   document.addEventListener('click', function() {
     resetColouredCells();
     selectedShip = null;
   });
+
+  
+  
+  
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
 });
 
