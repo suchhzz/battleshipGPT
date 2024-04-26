@@ -248,10 +248,14 @@
             .withUrl("/choose")
             .build();
 
+        function setPoint(col, row, currentDeck, horizontal) {
+            console.log("setPoint invoked: col: " + col + " row: " + row + " deck: " + currentDeck + " horizontal: " + horizontal);
 
+            hubConnection.invoke("SetShip", roomId, parseInt(col), parseInt(row), parseInt(currentDeck), horizontal);
+        }
+    
 
-
-        hubConnection.start()
+            hubConnection.start()
             .then(function () {
                 hubConnection.on("SetParameters", function (userIdFromServer, roomIdFromServer) {
                     userId = userIdFromServer;

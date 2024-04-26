@@ -10,12 +10,14 @@ namespace battleshipGPT.Hubs
 {
     public class ShipChooseHub : Hub
     {
+        private readonly ILogger<ShipChooseHub> _logger;
         private readonly ShipChooseService _shipChooseService;
         private readonly RoomService _roomService;
-        public ShipChooseHub(RoomService roomService, ShipChooseService shipChooseService)
+        public ShipChooseHub(RoomService roomService, ShipChooseService shipChooseService, ILogger<ShipChooseHub> logger)
         {
             _roomService = roomService;
             _shipChooseService = shipChooseService;
+            _logger = logger;
         }
         public async Task SetUsersParameters()
         {
@@ -34,14 +36,16 @@ namespace battleshipGPT.Hubs
             await Clients.Caller.SendAsync("SetParameters", player.Id, roomId);
         }
 
-        public async Task SetShip(string roomId, int headX, int headY, int deck, bool horizontal)
+        public async Task SetShip(string roomId, int x, int y, int deck, bool horizontal)
         {
             var currentRoom = _roomService.GetRoomById(Guid.Parse(roomId));
 
             if (currentRoom != null)
             {
-                _shipChooseService.SetShip(currentRoom, headX, headY, deck, horizontal);
+                _shipChooseService.SetShip(currentRoom, x, y, deck, horizontal);
             }
+
+            _logger.LogInformation($"player ships: {currentRoom.Player.PlayerShips.Count}");
         }
 
         public async Task CreateEnemyPlayground(string roomId)
@@ -54,6 +58,11 @@ namespace battleshipGPT.Hubs
             }
 
             await Clients.Group(roomId).SendAsync("StartGame");
+        }
+
+        public async Task Test(string roomId)
+        {
+            _logger.LogInformation("test method has been invoked, roomId: " + roomId);
         }
     }
 }

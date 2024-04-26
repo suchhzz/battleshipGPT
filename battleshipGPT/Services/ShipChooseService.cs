@@ -6,6 +6,11 @@ namespace battleshipGPT.Services
 {
     public class ShipChooseService
     {
+        private readonly ILogger<ShipChooseService> _logger;
+        public ShipChooseService(ILogger<ShipChooseService> logger)
+        {
+            _logger = logger;
+        }
         public void SetShip(Room room, int headX, int headY, int deck, bool horizontal)
         {
             ShipModel ship = new ShipModel();
@@ -17,6 +22,15 @@ namespace battleshipGPT.Services
             ship.Coords = CreateShip(headX, headY, ship);
 
             room.Player.PlayerShips.Add(ship);
+
+            string logResult = $"ship added\nhorizontal: {ship.Horizontal}\ndeck: {ship.Deck}\n";
+
+            foreach (var coords in ship.Coords)
+            {
+                logResult += $"x: {coords.X} y: {coords.Y}\n";
+            }
+
+            _logger.LogInformation(logResult);
         }
 
         private List<Coordinates> CreateShip(int headX, int headY, ShipModel ship)

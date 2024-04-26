@@ -11,7 +11,8 @@ document.addEventListener("DOMContentLoaded", function() {
   // корабль в выбраную ячейку перемещаем
   function moveShipToCell() {
     const row = parseInt(this.getAttribute('data-row'));
-    const col = parseInt(this.getAttribute('data-col'));
+      const col = parseInt(this.getAttribute('data-col'));
+      const deck = currentDeck;
     
 
     // Запрет на корабль рядом уже с стоящим кораблем
@@ -91,7 +92,10 @@ document.addEventListener("DOMContentLoaded", function() {
       let playgroundTable = document.getElementById("playground");
 
       let currentRow = row;
-      let currentCol = col;
+        let currentCol = col;
+
+        console.log("function");
+        setPoint(col, row, currentDeck, true);
 
       for (let i = 0; i < currentDeck; i++) {
 
@@ -109,6 +113,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
           currentCol++;
         }
+
         
 
       console.log(`Корабль поставлен на ряду ${row}, и в ячейке ${col}`);
