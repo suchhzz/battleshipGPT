@@ -9,7 +9,11 @@ document.addEventListener('DOMContentLoaded', function() {
       const clickedCell = event.target;
       if (playGroundEnemy.contains(clickedCell)) {
         const row = clickedCell.getAttribute('data-row');
-        const col = clickedCell.getAttribute('data-col');
+          const col = clickedCell.getAttribute('data-col');
+
+          console.log("invoking playermove on JS");
+          playerMove(col, row);
+
         console.log(`Игрок кликнул на ряд ${row} и на ячейку ${col}!`);
         shooted = true;
         gameArrow.classList.remove('rotated')

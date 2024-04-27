@@ -7,11 +7,14 @@ namespace battleshipGPT.Services
     {
         public void SetPoint(Room room, int x, int y)
         {
-            var selectedShip = IsShipHit(room.enemy.EnemyShips, x, y);
+            var selectedShip = ShipHitCheck(room.enemy.EnemyShips, x, y);
 
             if (selectedShip != null)
             {
-                room.enemy.EnemyShipsRemaining--;
+                if (selectedShip.Destroyed)
+                {
+                    room.enemy.EnemyShipsRemaining--;
+                }
             }
 
             room.enemy.UsedCoordinates.Add(new Coordinates { X = x, Y = y });
@@ -19,25 +22,95 @@ namespace battleshipGPT.Services
 
         }
 
-        private ShipModel IsShipHit(List<ShipModel> enemyShips, int x, int y)
+        public HitPointModel GetHitCoord(Room room, int x, int y)
+        {
+            var hitPoint = new HitPointModel
+            {
+                HitCoords = new Coordinates { X = x, Y = y },
+                isHit = false,
+                BorderCoords = new List<Coordinates>()
+            };
+
+            var hitShip = ShipHitCheck(room.enemy.EnemyShips, x, y);
+
+            if (hitShip != null)
+            {
+                hitPoint.isHit = true;
+
+                if (hitShip.Destroyed)
+                {
+                    hitPoint.BorderCoords = GetBorderCoords(hitShip);
+
+                    room.enemy.EnemyShipsRemaining--;
+                }
+            }
+
+            return hitPoint;
+        }
+
+        private List<Coordinates> GetBorderCoords(ShipModel ship)
+        {
+            List<Coordinates> borderCoords = new List<Coordinates>();
+
+            Coordinates upperLeftBorder = new Coordinates { X = ship.Coords[0].X, Y = ship.Coords[0].Y };
+            Coordinates lowerRightBorder = new Coordinates { X = ship.Coords[ship.Coords.Count - 1].X, Y = ship.Coords[ship.Coords.Count - 1].Y };
+
+            if (upperLeftBorder.X - 1 >= 0)
+            {
+                upperLeftBorder.X--;
+            }
+            if (upperLeftBorder.Y - 1 >= 0)
+            {
+                upperLeftBorder.Y--;
+            }
+
+            if (lowerRightBorder.X + 1 <= 9)
+            {
+                lowerRightBorder.X++;
+            }
+            if (lowerRightBorder.Y + 1 <= 9)
+            {
+                lowerRightBorder.Y++;
+            }
+
+            bool border = true;
+
+            while (border)
+            {
+                if (!ship.Coords.Contains(upperLeftBorder))
+                {
+                    borderCoords.Add(upperLeftBorder);
+                }
+
+                if (upperLeftBorder.X != lowerRightBorder.X && upperLeftBorder.Y != upperLeftBorder.Y)
+                {
+                    border = false;
+                }
+            }
+
+            return borderCoords;
+        }
+
+        private ShipModel ShipHitCheck(List<ShipModel> enemyShips, int x, int y)
         {
             ShipModel hittedShipModel = null;
 
+            Coordinates playerHitCoords = new Coordinates { X = x, Y = y };  
+
             foreach (var ship in enemyShips)
             {
-                foreach (var coordinates in ship.Coords)
+                if (ship.Coords.Contains(playerHitCoords))
                 {
-                    if (coordinates.X == x && coordinates.Y == y)
+                    ship.DeckRemaining--;
+
+                    if (ship.DeckRemaining == 0)
                     {
-                        hittedShipModel = ship;
-
-                        hittedShipModel.DeckRemaining--;
-
-                        if (hittedShipModel.DeckRemaining == 0)
-                        {
-                            hittedShipModel.Destroyed = true;
-                        }
+                        ship.Destroyed = true;
                     }
+
+                    hittedShipModel = ship;
+
+                    break;
                 }
             }
 

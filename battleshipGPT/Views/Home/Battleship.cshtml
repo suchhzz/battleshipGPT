@@ -346,6 +346,13 @@
             return document.querySelector(`${tableClass} [data-row="${rowIndex}"][data-col="${colIndex}"]`);
         }
 
+        function playerMove(colCoord, rowCoord) {
+
+            console.log("inside PlayerMove");
+
+            hubConnection.invoke("PlayerMove", roomId, parseInt(colCoord), parseInt(rowCoord));
+        }
+
 
         hubConnection.start()
         .then(function () {
@@ -353,7 +360,31 @@
 
             setShips(playerShipsData, false);
 
-                setShips(enemyShipsData, true);
+            setShips(enemyShipsData, true);
+
+            hubConnection.on("SetClientPoint", function (isHit, hitPoint, borderPoints) {
+
+                console.log("inside SetClientPoint");
+                console.log("is hit: " + isHit);
+                console.log("hit point: " + hitPoint.x + " " + hitPoint.y);
+
+                let selectedCell = getCell(hitPoint.x, hitPoint.y, true);
+
+                if (isHit) {
+                    selectedCell.style.backgroundColor = "red";
+                }
+                else { 
+                    selectedCell.style.backgroundColor = "black";
+                }
+
+                borderPoints.forEach(function (point) {
+                    selectedCell = getCell(point.x, point.y, true);
+
+                    selectedCell.style.backgroundColor = "black";
+                });
+
+
+            });
         })
         .catch(function (err) {
             console.error(err.toString());
