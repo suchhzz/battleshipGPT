@@ -10,6 +10,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddSignalR();
 
 builder.Services.AddSingleton<RoomService>();
+builder.Services.AddSingleton<GameService>();
 builder.Services.AddSingleton<ShipChooseService>();
 builder.Services.AddSingleton<LogService>();
 
@@ -32,7 +33,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{action=Battleship}/{id?}");
 
 app.MapHub<ShipChooseHub>("/choose");
 app.MapHub<GameHub>("/game");

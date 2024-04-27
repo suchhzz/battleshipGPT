@@ -11,7 +11,7 @@
     <div class="container">
         <div class="titleHolder">
             <h1>Your field</h1>
-            <form id="roomIdForm" asp-controller="Home" asp-action="Battleship" method="post">
+            <form id="roomIdForm" asp-controller="Home" asp-action="Battleship" method="get">
                 <input type="hidden" id="roomIdInput" name="roomId" value="" />
                 <input type="submit" class="playButt" value="Click to Play!" />
             </form>
@@ -193,8 +193,6 @@
                     </tbody>
                 </table>
             </div>
-
-
 
 
             <div class="shipsHolder">

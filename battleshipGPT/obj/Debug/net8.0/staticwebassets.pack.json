@@ -5,8 +5,8 @@
       "PackagePath": "staticwebassets\\battleshipGPT.bundle.scp.css"
     },
     {
-      "Id": "C:\\Users\\jenje\\source\\repos\\battleshipGPT\\battleshipGPT\\wwwroot\\css\\second-part.css",
-      "PackagePath": "staticwebassets\\css\\second-part.css"
+      "Id": "C:\\Users\\jenje\\source\\repos\\battleshipGPT\\battleshipGPT\\wwwroot\\css\\battleship-style.css",
+      "PackagePath": "staticwebassets\\css\\battleship-style.css"
     },
     {
       "Id": "C:\\Users\\jenje\\source\\repos\\battleshipGPT\\battleshipGPT\\wwwroot\\css\\site.css",
@@ -19,6 +19,10 @@
     {
       "Id": "C:\\Users\\jenje\\source\\repos\\battleshipGPT\\battleshipGPT\\wwwroot\\favicon.ico",
       "PackagePath": "staticwebassets\\favicon.ico"
+    },
+    {
+      "Id": "C:\\Users\\jenje\\source\\repos\\battleshipGPT\\battleshipGPT\\wwwroot\\js\\battleship.js",
+      "PackagePath": "staticwebassets\\js\\battleship.js"
     },
     {
       "Id": "C:\\Users\\jenje\\source\\repos\\battleshipGPT\\battleshipGPT\\wwwroot\\js\\script.js",

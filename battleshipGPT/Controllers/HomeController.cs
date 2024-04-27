@@ -1,4 +1,6 @@
 using battleshipGPT.Models;
+using battleshipGPT.Models.MainModels;
+using battleshipGPT.Serives;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -7,10 +9,12 @@ namespace battleshipGPT.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly RoomService _roomService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, RoomService roomService)
         {
             _logger = logger;
+            _roomService = roomService;
         }
 
         public IActionResult Index()
@@ -18,12 +22,16 @@ namespace battleshipGPT.Controllers
             return View();
         }
 
-        [HttpPost]
         public IActionResult Battleship(string roomId)
         {
-            _logger.LogInformation("roomId: " + roomId); 
 
-            return View("Battleship", roomId);
+            // var currentRoom = _roomService.GetRoomById(Guid.Parse(roomId));
+
+            var currentRoom = _roomService.GetTestRoom();
+
+            _logger.LogInformation("roomId: " + currentRoom.RoomId); 
+
+            return View("Battleship", currentRoom);
         }
 
         public IActionResult Privacy()
