@@ -9,10 +9,12 @@ namespace battleshipGPT.Hubs
     {
         private readonly GameService _gameService;
         private readonly RoomService _roomService;
-        public GameHub(GameService gameService, RoomService roomService)
+        private readonly ILogger<GameHub> _logger;
+        public GameHub(GameService gameService, RoomService roomService, ILogger<GameHub> logger)
         {
             _gameService = gameService;
             _roomService = roomService;
+            _logger = logger;
         }
         public async Task PlayerMove(string roomId, int selectedCol, int selectedRow)
         {
@@ -20,7 +22,9 @@ namespace battleshipGPT.Hubs
 
             var hitPointModel = _gameService.GetHitCoord(currentRoom, selectedCol, selectedRow);
 
-            await Clients.Group(roomId).SendAsync("SetClientPoint", hitPointModel.isHit, hitPointModel.HitCoords, hitPointModel.BorderCoords);
+            _logger.LogInformation($"hitPointModel: is hit: {hitPointModel.isHit} hit coords: {hitPointModel.HitCoords.X} borderCoords: {hitPointModel.BorderCoords.Count}");
+
+            await Clients.Caller.SendAsync("SetClientPoint", hitPointModel.isHit, hitPointModel.HitCoords, hitPointModel.BorderCoords);
         }
 
         public async Task EnemyMove(string roomId)

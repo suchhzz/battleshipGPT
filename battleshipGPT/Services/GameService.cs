@@ -73,48 +73,53 @@ namespace battleshipGPT.Services
                 lowerRightBorder.Y++;
             }
 
-            bool border = true;
-
-            while (border)
+            for (int i = upperLeftBorder.Y; i <= lowerRightBorder.Y; i++)
             {
-                if (!ship.Coords.Contains(upperLeftBorder))
+                for (int j = upperLeftBorder.X; j <= lowerRightBorder.X; j++)
                 {
-                    borderCoords.Add(upperLeftBorder);
-                }
-
-                if (upperLeftBorder.X != lowerRightBorder.X && upperLeftBorder.Y != upperLeftBorder.Y)
-                {
-                    border = false;
+                    if (!ShipContainsCoords(ship, j, i))
+                    {
+                        borderCoords.Add(new Coordinates { X = j, Y = i });
+                    }
                 }
             }
 
             return borderCoords;
         }
 
-        private ShipModel ShipHitCheck(List<ShipModel> enemyShips, int x, int y)
+        private bool ShipContainsCoords(ShipModel ship, int x, int y)
         {
-            ShipModel hittedShipModel = null;
-
-            Coordinates playerHitCoords = new Coordinates { X = x, Y = y };  
-
-            foreach (var ship in enemyShips)
+            foreach (var coords in ship.Coords)
             {
-                if (ship.Coords.Contains(playerHitCoords))
+                if (coords.X == x && coords.Y == y)
                 {
-                    ship.DeckRemaining--;
-
-                    if (ship.DeckRemaining == 0)
-                    {
-                        ship.Destroyed = true;
-                    }
-
-                    hittedShipModel = ship;
-
-                    break;
+                    return true;
                 }
             }
+            return false;
+        }
 
-            return hittedShipModel;
+
+        private ShipModel ShipHitCheck(List<ShipModel> enemyShips, int x, int y)
+        {
+            foreach (var ship in enemyShips)
+            {
+                foreach (var coords in ship.Coords)
+                { 
+                    if (coords.X == x && coords.Y == y)
+                    {
+                        ship.DeckRemaining--;
+
+                        if (ship.DeckRemaining == 0)
+                        {
+                            ship.Destroyed = true;
+                        }
+
+                        return ship;
+                    }
+                }
+            }
+            return null;
         }
 
         public void EnemySetPoint(Room room)
