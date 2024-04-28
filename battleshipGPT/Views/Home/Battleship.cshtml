@@ -325,6 +325,15 @@
     <script>
 
         let roomId = `@Model.RoomId`;
+        let playerTurn = true;
+
+        function getPlayerTurn() {
+            return playerTurn;
+        }
+
+        function setPlayerTurn(status) {
+            playerTurn = status;
+        }
 
         const hubConnection = new signalR.HubConnectionBuilder()
             .withUrl("/game")
@@ -341,7 +350,9 @@
         }
 
         function enemyMove() {
-            hubConnection.invoke("EnemyMove", roomId);
+            setTimeout(function () {
+                hubConnection.invoke("EnemyMove", roomId);
+            }, 1000);
         }
 
 
@@ -373,6 +384,8 @@
                 }
                 else { 
                     selectedCell.style.backgroundColor = "black";
+                        rotateArrow(true);
+                    setPlayerTurn(false);
                 }
 
                 borderPoints.forEach(function (point) {
@@ -381,7 +394,37 @@
                     selectedCell.style.backgroundColor = "black";
                 });
 
+                if (!getPlayerTurn())
+                {
+                    enemyMove();
+                }
+            });
 
+            hubConnection.on("SetEnemyPoint", function (isHit, hitPoint, borderPoints) {
+
+                console.log("inside SetEnemyPoint");
+
+                let selectedCell = getCell(hitPoint.x, hitPoint.y, false);
+
+                if (isHit) {
+                    selectedCell.style.backgroundColor = "red";
+                }
+                else {
+                    selectedCell.style.backgroundColor = "black";
+                    setPlayerTurn(true);
+                    rotateArrow(false);
+                }
+                    
+                borderPoints.forEach(function (point) {
+                    selectedCell = getCell(point.x, point.y, false);
+
+                    selectedCell.style.backgroundColor = "black";
+                });
+
+                if (!getPlayerTurn())
+                {
+                    enemyMove();
+                }
             });
         })
         .catch(function (err) {

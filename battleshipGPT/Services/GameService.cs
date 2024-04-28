@@ -61,6 +61,11 @@ namespace battleshipGPT.Services
 
                         room.enemy.UsedCoordinates.AddRange(hitPoint.BorderCoords);
                         room.enemy.UsedCoordinates = room.enemy.UsedCoordinates.Distinct().ToList();
+                        
+                        foreach (var usedCoords in hitPoint.BorderCoords)
+                        {
+                            room.enemy.AvailableCoordinates.Remove(usedCoords);
+                        }
 
                         room.enemy.EnemyHitCoordinates.Clear();
                     }

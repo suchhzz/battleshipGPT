@@ -38,6 +38,8 @@ namespace battleshipGPT.Hubs
             var enemyHitPoint = _gameService.GetHitCoord(currentRoom, enemyRandomPoint.X, enemyRandomPoint.Y, false);
 
             _logger.LogInformation($"hitPointModel: is hit: {enemyHitPoint.isHit} hit coords: x: {enemyHitPoint.HitCoords.X} y: {enemyHitPoint.HitCoords.Y} borderCoords: {enemyHitPoint.BorderCoords.Count}");
+
+            await Clients.Caller.SendAsync("SetEnemyPoint", enemyHitPoint.isHit, enemyHitPoint.HitCoords, enemyHitPoint.BorderCoords);
         }
 
         public async Task TestHitPoint(string roomId)

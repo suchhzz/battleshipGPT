@@ -1,22 +1,18 @@
-document.addEventListener('DOMContentLoaded', function() {
+let gameArrow;
+document.addEventListener('DOMContentLoaded', function () {
   const playGroundEnemy = document.querySelector('.enemyField');
   const playGroundPlayer = document.querySelector('.playerField');
-  const gameArrow = document.querySelector('svg')
+  gameArrow = document.querySelector('svg');
     let playerTurn = true;
 
   playGroundEnemy.addEventListener('click', function(event) {
-    if (playerTurn) {
+    if (getPlayerTurn()) {
       const clickedCell = event.target;
       if (playGroundEnemy.contains(clickedCell)) {
         const row = clickedCell.getAttribute('data-row');
           const col = clickedCell.getAttribute('data-col');
 
-          if (clickedCell.style.backgroundColor !== 'rgb(110, 110, 110)') {
-              playerTurn = false;
-
-              enemyMove();
-          }
-          console.log("player turn: " + playerTurn);
+          console.log("player turn: " + getPlayerTurn());
 
           console.log("selected cell color : " + clickedCell.style.backgroundColor);
 
@@ -25,14 +21,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
           console.log(`Игрок кликнул на ряд ${row} и на ячейку ${col}!`);
 
-
-          if (playerTurn) {
-              gameArrow.classList.remove('rotated')
-          }
-
       }
     }
   });
+
+    
+
 
   playGroundPlayer.addEventListener('click', function(event) {
     if (!playerTurn) {
@@ -41,8 +35,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const row = clickedCell.getAttribute('data-row');
         const col = clickedCell.getAttribute('data-col');
         console.log(`Противник кликнул на ряд ${row} и на ячейку ${col}!`);
-        playerTurn = true;
-          gameArrow.classList.add('rotated');
 
 
       }
@@ -50,3 +42,12 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
 });
+
+function rotateArrow(status) {
+    if (status) {
+        gameArrow.classList.remove('rotated');
+    }
+    else {
+        gameArrow.classList.add('rotated');
+    }
+}
