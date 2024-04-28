@@ -16,13 +16,9 @@ namespace battleshipGPT.Services
                     room.enemy.EnemyShipsRemaining--;
                 }
             }
-
-            room.enemy.UsedCoordinates.Add(new Coordinates { X = x, Y = y });
-            room.enemy.AvailableCoordinates.Remove(new Coordinates { X = x, Y = y });
-
         }
 
-        public HitPointModel GetHitCoord(Room room, int x, int y)
+        public HitPointModel GetHitCoord(Room room, int x, int y, bool isPlayerMoves)
         {
             var hitPoint = new HitPointModel
             {
@@ -31,19 +27,46 @@ namespace battleshipGPT.Services
                 BorderCoords = new List<Coordinates>()
             };
 
-            var hitShip = ShipHitCheck(room.enemy.EnemyShips, x, y);
+            ShipModel hitShip = new ShipModel();
+
+            if (isPlayerMoves)
+            {
+                hitShip = ShipHitCheck(room.enemy.EnemyShips, x, y);
+            }
+            else
+            {
+                hitShip = ShipHitCheck(room.Player.PlayerShips, x, y);
+            }
 
             if (hitShip != null)
             {
                 hitPoint.isHit = true;
 
+                if (!isPlayerMoves)
+                {
+                    room.enemy.EnemyHitCoordinates.Add(new Coordinates { X = x, Y = y });
+                }
+
                 if (hitShip.Destroyed)
                 {
                     hitPoint.BorderCoords = GetBorderCoords(hitShip);
 
-                    room.enemy.EnemyShipsRemaining--;
+                    if (isPlayerMoves)
+                    {
+                        room.enemy.EnemyShipsRemaining--;
+                    }
+                    else
+                    {
+                        room.Player.PlayerShipsRemaining--;
+
+                        room.enemy.UsedCoordinates.AddRange(hitPoint.BorderCoords);
+                        room.enemy.UsedCoordinates = room.enemy.UsedCoordinates.Distinct().ToList();
+
+                        room.enemy.EnemyHitCoordinates.Clear();
+                    }
                 }
             }
+
 
             return hitPoint;
         }
@@ -100,9 +123,9 @@ namespace battleshipGPT.Services
         }
 
 
-        private ShipModel ShipHitCheck(List<ShipModel> enemyShips, int x, int y)
+        private ShipModel ShipHitCheck(List<ShipModel> checkShips, int x, int y)
         {
-            foreach (var ship in enemyShips)
+            foreach (var ship in checkShips)
             {
                 foreach (var coords in ship.Coords)
                 { 
@@ -122,32 +145,67 @@ namespace battleshipGPT.Services
             return null;
         }
 
-        public void EnemySetPoint(Room room)
+        public Coordinates EnemySetPoint(Room room)
         {
             bool setPoint = false;
+
+            Coordinates enemyRandomCoord = new Coordinates();
 
             while (!setPoint)
             {
                 if (room.enemy.EnemyHitCoordinates.Count != 0)
                 {
-                    var newEnemyCoords = generateRandomDirection(room.enemy.EnemyHitCoordinates);
+                    enemyRandomCoord = generateRandomDirection(room.enemy.EnemyHitCoordinates);
 
-                    if (room.enemy.EnemyHitCoordinates.Count == 1)
+                    if (checkBorder(enemyRandomCoord) && checkShipBorders(room, enemyRandomCoord))
                     {
-                        if (checkBorder(newEnemyCoords) && checkShipBorders(room, newEnemyCoords))
+                        setPoint = true;
+                    }
+                    
+                }
+                else
+                {
+                    var rnd = new Random();
+
+                    enemyRandomCoord = room.enemy.AvailableCoordinates[rnd.Next(0, room.enemy.AvailableCoordinates.Count)];
+
+                    setPoint = true;
+                }
+            }
+            room.enemy.UsedCoordinates.Add(enemyRandomCoord);
+            room.enemy.AvailableCoordinates.Remove(enemyRandomCoord);
+
+            return enemyRandomCoord;
+        }
+
+        private ShipModel checkEnemyHit(Coordinates checkCoords, List<ShipModel> shipsList)
+        {
+            foreach (var ship in shipsList)
+            {
+                foreach (var coord in ship.Coords)
+                {
+                    if (coord.X == checkCoords.X && coord.Y == checkCoords.Y)
+                    {
+                        ship.DeckRemaining--;
+
+                        if (ship.DeckRemaining == 0)
                         {
-                            setPoint = true;
+                            ship.Destroyed = true;
                         }
+
+                        return ship;
                     }
                 }
             }
+
+            return null;
         }
 
         private Coordinates generateRandomDirection(List<Coordinates> coordinates)
         {
             var rnd = new Random();
 
-            var enemyCoordinates = new Coordinates();
+            var enemyCoordinates = new Coordinates { X = coordinates[0].X, Y = coordinates[0].Y };
 
             bool horizontal = true;
             bool direction = true;
@@ -257,7 +315,7 @@ namespace battleshipGPT.Services
         }
         private bool compareCoordinates(Coordinates coords, List<Coordinates> userCoords)
         {
-            return userCoords.Contains(coords);
+            return userCoords.FirstOrDefault(c => c.X == coords.X && c.Y == coords.Y) != null;
         }
         private bool availableCoordinate(Room room, Coordinates coords) // свободна ли ячейка
         {
@@ -266,7 +324,7 @@ namespace battleshipGPT.Services
 
         private bool checkBorder(Coordinates coords)
         {
-            return coords.X <= 9 && coords.X >= 0 && coords.Y <= 9 && coords.X >= 0;
+            return coords.X <= 9 && coords.X >= 0 && coords.Y <= 9 && coords.Y >= 0;
         }
 
         private bool checkShipBorders(Room room, Coordinates coords)

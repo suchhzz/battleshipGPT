@@ -13,6 +13,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
           if (clickedCell.style.backgroundColor !== 'rgb(110, 110, 110)') {
               playerTurn = false;
+
+              enemyMove();
           }
           console.log("player turn: " + playerTurn);
 
@@ -22,9 +24,6 @@ document.addEventListener('DOMContentLoaded', function() {
           playerMove(col, row);
 
           console.log(`Игрок кликнул на ряд ${row} и на ячейку ${col}!`);
-
-          
-
 
 
           if (playerTurn) {

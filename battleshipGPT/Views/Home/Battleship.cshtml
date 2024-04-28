@@ -340,6 +340,10 @@
             });
         }
 
+        function enemyMove() {
+            hubConnection.invoke("EnemyMove", roomId);
+        }
+
 
         function getCell(colIndex, rowIndex, isEnemy) {
             var tableClass = isEnemy ? '.enemyBoard' : '.playerField';

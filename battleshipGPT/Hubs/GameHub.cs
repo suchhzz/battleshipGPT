@@ -20,7 +20,7 @@ namespace battleshipGPT.Hubs
         {
             var currentRoom = _roomService.GetRoomById(Guid.Parse(roomId));
 
-            var hitPointModel = _gameService.GetHitCoord(currentRoom, selectedCol, selectedRow);
+            var hitPointModel = _gameService.GetHitCoord(currentRoom, selectedCol, selectedRow, true);
 
             _logger.LogInformation($"hitPointModel: is hit: {hitPointModel.isHit} hit coords: {hitPointModel.HitCoords.X} borderCoords: {hitPointModel.BorderCoords.Count}");
 
@@ -31,7 +31,13 @@ namespace battleshipGPT.Hubs
         {
             var currentRoom = _roomService.GetRoomById(Guid.Parse(roomId));
 
-            _gameService.EnemySetPoint(currentRoom);
+            var enemyRandomPoint = _gameService.EnemySetPoint(currentRoom);
+
+            _logger.LogInformation($"enemy chose: x: {enemyRandomPoint.X} y: {enemyRandomPoint.Y}");
+
+            var enemyHitPoint = _gameService.GetHitCoord(currentRoom, enemyRandomPoint.X, enemyRandomPoint.Y, false);
+
+            _logger.LogInformation($"hitPointModel: is hit: {enemyHitPoint.isHit} hit coords: x: {enemyHitPoint.HitCoords.X} y: {enemyHitPoint.HitCoords.Y} borderCoords: {enemyHitPoint.BorderCoords.Count}");
         }
 
         public async Task TestHitPoint(string roomId)
