@@ -25,9 +25,9 @@ namespace battleshipGPT.Controllers
         public IActionResult Battleship(string roomId)
         {
 
-            // var currentRoom = _roomService.GetRoomById(Guid.Parse(roomId));
+           var currentRoom = _roomService.GetRoomById(Guid.Parse(roomId));
 
-            var currentRoom = _roomService.GetTestRoom();
+           // var currentRoom = _roomService.GetTestRoom();
 
             _logger.LogInformation("roomId: " + currentRoom.RoomId); 
 

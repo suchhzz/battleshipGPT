@@ -371,9 +371,9 @@
         .then(function () {
             console.log("connected roomId: " + roomId);
 
-            setShips(playerShipsData, false);
+            hubConnection.invoke("ConnectUser", roomId);
 
-            setShips(enemyShipsData, true);
+            setShips(playerShipsData, false);
 
             hubConnection.on("SetClientPoint", function (isHit, hitPoint, borderPoints) {
 

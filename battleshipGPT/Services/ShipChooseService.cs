@@ -23,6 +23,8 @@ namespace battleshipGPT.Services
 
             room.Player.PlayerShips.Add(ship);
 
+            room.Player.PlayerShipsRemaining++;
+
             string logResult = $"ship added\nhorizontal: {ship.Horizontal}\ndeck: {ship.Deck}\n";
 
             foreach (var coords in ship.Coords)
