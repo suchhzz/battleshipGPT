@@ -14,7 +14,7 @@ namespace battleshipGPT.Serives
                 Player = new Player
                 {
                     PlayerShips = new List<ShipModel>
-                {
+                    {
                     new ShipModel { Coords = new List<Coordinates> { new Coordinates { X = 0, Y = 0 } }, Deck = 1, DeckRemaining = 1, Destroyed = false, Horizontal = true },
 
                     new ShipModel { Coords = new List<Coordinates>
@@ -37,7 +37,8 @@ namespace battleshipGPT.Serives
                         new Coordinates { X = 8, Y = 3 },
                         new Coordinates { X = 9, Y = 3 }
                     }, Deck = 4, DeckRemaining = 4, Destroyed = false, Horizontal = true }
-                }
+                    },
+                    PlayerShipsRemaining = 4
                 },
                 enemy = new Enemy
                 {
@@ -67,7 +68,7 @@ namespace battleshipGPT.Serives
                     }, Deck = 4, DeckRemaining = 4, Destroyed = false, Horizontal = false }
                     },
 
-                    EnemyHitCoordinates = new List<Coordinates> (),
+                    EnemyHitCoordinates = new List<Coordinates>(),
                     AvailableCoordinates = setAvailableCoordinates(),
                     UsedCoordinates = new List<Coordinates>(),
                     EnemyShipsRemaining = 4

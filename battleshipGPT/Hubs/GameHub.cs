@@ -25,6 +25,8 @@ namespace battleshipGPT.Hubs
             _logger.LogInformation($"hitPointModel: is hit: {hitPointModel.isHit} hit coords: {hitPointModel.HitCoords.X} borderCoords: {hitPointModel.BorderCoords.Count}");
 
             await Clients.Caller.SendAsync("SetClientPoint", hitPointModel.isHit, hitPointModel.HitCoords, hitPointModel.BorderCoords);
+
+            await CheckWinner(roomId);
         }
 
         public async Task EnemyMove(string roomId)
@@ -40,21 +42,22 @@ namespace battleshipGPT.Hubs
             _logger.LogInformation($"hitPointModel: is hit: {enemyHitPoint.isHit} hit coords: x: {enemyHitPoint.HitCoords.X} y: {enemyHitPoint.HitCoords.Y} borderCoords: {enemyHitPoint.BorderCoords.Count}");
 
             await Clients.Caller.SendAsync("SetEnemyPoint", enemyHitPoint.isHit, enemyHitPoint.HitCoords, enemyHitPoint.BorderCoords);
+
+            await CheckWinner(roomId);
         }
 
-        public async Task TestHitPoint(string roomId)
+        private async Task CheckWinner(string roomId)
         {
             var currentRoom = _roomService.GetRoomById(Guid.Parse(roomId));
 
-            List<Coordinates> hitCoords = new List<Coordinates>();
-            hitCoords.Add(new Coordinates { X = 4, Y = 4 });
-            hitCoords.Add(new Coordinates { X = 7, Y = 5 });
-
-            List<Coordinates> missCoords = new List<Coordinates>();
-            missCoords.Add(new Coordinates { X = 6, Y = 6 });
-
-
-            await Clients.Caller.SendAsync("SetClientPoint", hitCoords, missCoords);
+            if (currentRoom.enemy.EnemyShipsRemaining == 0)
+            {
+                await Clients.Caller.SendAsync("GameOver", true);
+            }
+            else if (currentRoom.Player.PlayerShipsRemaining == 0)
+            {
+                await Clients.Caller.SendAsync("GameOver", true);
+            }
         }
     }
 }

@@ -183,29 +183,6 @@ namespace battleshipGPT.Services
             return enemyRandomCoord;
         }
 
-        private ShipModel checkEnemyHit(Coordinates checkCoords, List<ShipModel> shipsList)
-        {
-            foreach (var ship in shipsList)
-            {
-                foreach (var coord in ship.Coords)
-                {
-                    if (coord.X == checkCoords.X && coord.Y == checkCoords.Y)
-                    {
-                        ship.DeckRemaining--;
-
-                        if (ship.DeckRemaining == 0)
-                        {
-                            ship.Destroyed = true;
-                        }
-
-                        return ship;
-                    }
-                }
-            }
-
-            return null;
-        }
-
         private Coordinates generateRandomDirection(List<Coordinates> coordinates)
         {
             var rnd = new Random();
@@ -321,10 +298,6 @@ namespace battleshipGPT.Services
         private bool compareCoordinates(Coordinates coords, List<Coordinates> userCoords)
         {
             return userCoords.FirstOrDefault(c => c.X == coords.X && c.Y == coords.Y) != null;
-        }
-        private bool availableCoordinate(Room room, Coordinates coords) // свободна ли ячейка
-        {
-            return !room.enemy.UsedCoordinates.Contains(coords);
         }
 
         private bool checkBorder(Coordinates coords)

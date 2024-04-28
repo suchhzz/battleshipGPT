@@ -380,18 +380,20 @@
                 let selectedCell = getCell(hitPoint.x, hitPoint.y, true);
 
                 if (isHit) {
-                    selectedCell.style.backgroundColor = "red";
+                        selectedCell.style.backgroundColor = "red";
                 }
                 else { 
                     selectedCell.style.backgroundColor = "black";
                         rotateArrow(true);
                     setPlayerTurn(false);
-                }
+                    }
+                    selectedCell.classList.add('occupied');
 
                 borderPoints.forEach(function (point) {
                     selectedCell = getCell(point.x, point.y, true);
 
                     selectedCell.style.backgroundColor = "black";
+                    selectedCell.classList.add('occupied');
                 });
 
                 if (!getPlayerTurn())
@@ -402,29 +404,34 @@
 
             hubConnection.on("SetEnemyPoint", function (isHit, hitPoint, borderPoints) {
 
-                console.log("inside SetEnemyPoint");
-
                 let selectedCell = getCell(hitPoint.x, hitPoint.y, false);
+                    selectedCell.classList.add('occupied');
 
                 if (isHit) {
-                    selectedCell.style.backgroundColor = "red";
+                        selectedCell.style.backgroundColor = "red";
                 }
                 else {
                     selectedCell.style.backgroundColor = "black";
                     setPlayerTurn(true);
                     rotateArrow(false);
-                }
+                    }
                     
                 borderPoints.forEach(function (point) {
                     selectedCell = getCell(point.x, point.y, false);
-
-                    selectedCell.style.backgroundColor = "black";
+                        selectedCell.style.backgroundColor = "black";
+                        selectedCell.classList.add('occupied');
                 });
 
                 if (!getPlayerTurn())
                 {
                     enemyMove();
                 }
+            });
+
+            hubConnection.on("GameOver", function (isPlayerWon) {
+
+                console.log("removed");
+                playGroundEnemy.removeEventListener('click', handleClickEvent);
             });
         })
         .catch(function (err) {

@@ -33,7 +33,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Battleship}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.MapHub<ShipChooseHub>("/choose");
 app.MapHub<GameHub>("/game");
