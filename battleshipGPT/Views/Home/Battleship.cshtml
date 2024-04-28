@@ -348,8 +348,6 @@
 
         function playerMove(colCoord, rowCoord) {
 
-            console.log("inside PlayerMove");
-
             hubConnection.invoke("PlayerMove", roomId, parseInt(colCoord), parseInt(rowCoord));
         }
 
@@ -363,10 +361,6 @@
             setShips(enemyShipsData, true);
 
             hubConnection.on("SetClientPoint", function (isHit, hitPoint, borderPoints) {
-
-                console.log("inside SetClientPoint");
-                console.log("is hit: " + isHit);
-                console.log("hit point: " + hitPoint.x + " " + hitPoint.y);
 
                 let selectedCell = getCell(hitPoint.x, hitPoint.y, true);
 
