@@ -62,7 +62,7 @@ namespace battleshipGPT.Hubs
             }
             else if (currentRoom.Player.PlayerShipsRemaining == 0)
             {
-                await Clients.Group(roomId).SendAsync("GameOver", true);
+                await Clients.Group(roomId).SendAsync("GameOver", false);
             }
         }
     }

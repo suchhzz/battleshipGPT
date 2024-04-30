@@ -10,6 +10,7 @@
 </head>
 <body>
     <div class="container">
+        <div class="winner" id="winMessage"></div>
         <div class="yourField">
             <div class="titleHolder">
                 <h1>Your Field</h1>
@@ -349,9 +350,9 @@
             });
         }
 
-        function enemyMove() {
+        function enemyMove() { 
             setTimeout(function () {
-                hubConnection.invoke("EnemyMove", roomId);
+                hubConnection.invoke("EnemyMove", roomId); 
             }, 1000);
         }
 
@@ -361,9 +362,9 @@
             return document.querySelector(`${tableClass} [data-row="${rowIndex}"][data-col="${colIndex}"]`);
         }
 
-        function playerMove(colCoord, rowCoord) {
+        function playerMove(colCoord, rowCoord) { 
 
-            hubConnection.invoke("PlayerMove", roomId, parseInt(colCoord), parseInt(rowCoord));
+            hubConnection.invoke("PlayerMove", roomId, parseInt(colCoord), parseInt(rowCoord)); 
         }
 
 
@@ -375,21 +376,21 @@
 
             setShips(playerShipsData, false);
 
-            hubConnection.on("SetClientPoint", function (isHit, hitPoint, borderPoints) {
+            hubConnection.on("SetClientPoint", function (isHit, hitPoint, borderPoints) { 
 
-                let selectedCell = getCell(hitPoint.x, hitPoint.y, true);
+                let selectedCell = getCell(hitPoint.x, hitPoint.y, true); 
 
                 if (isHit) {
                         selectedCell.style.backgroundColor = "red";
                 }
                 else { 
-                    selectedCell.style.backgroundColor = "black";
+                    selectedCell.style.backgroundColor = "black"; 
                         rotateArrow(true);
                     setPlayerTurn(false);
                     }
                     selectedCell.classList.add('occupied');
 
-                borderPoints.forEach(function (point) {
+                borderPoints.forEach(function (point) { 
                     selectedCell = getCell(point.x, point.y, true);
 
                     selectedCell.style.backgroundColor = "black";
@@ -398,11 +399,11 @@
 
                 if (!getPlayerTurn())
                 {
-                    enemyMove();
+                    enemyMove(); 
                 }
             });
 
-            hubConnection.on("SetEnemyPoint", function (isHit, hitPoint, borderPoints) {
+            hubConnection.on("SetEnemyPoint", function (isHit, hitPoint, borderPoints) { 
 
                 let selectedCell = getCell(hitPoint.x, hitPoint.y, false);
                     selectedCell.classList.add('occupied');
@@ -432,6 +433,26 @@
 
                 console.log("removed");
                 playGroundEnemy.removeEventListener('click', handleClickEvent);
+
+                    const winnerField = document.querySelector('.winner')
+
+                let winMessageDiv = document.getElementById("winMessage");
+
+                let winMessageElement = document.createElement("p");
+
+                if (isPlayerWon) {
+                    winMessageElement.textContent = "Player WON!";
+                }
+                else
+                {
+                    winMessageElement.textContent = "Enemy WON!";
+                }
+
+                if (winMessageDiv.firstChild) {
+                    winMessageDiv.removeChild(winMessageDiv.firstChild);
+                }
+
+               winMessageDiv.appendChild(winMessageElement);
             });
         })
         .catch(function (err) {

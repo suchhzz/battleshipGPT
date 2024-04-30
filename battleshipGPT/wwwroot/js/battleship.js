@@ -14,7 +14,8 @@ function handleClickEvent(event) {
             if (playGroundEnemy.contains(clickedCell)) {
                 const row = clickedCell.getAttribute('data-row');
                 const col = clickedCell.getAttribute('data-col');
-                playerMove(col, row);
+
+                playerMove(col, row); 
 
                 console.log(`Игрок кликнул на ряд ${row} и на ячейку ${col}!`);
             }
