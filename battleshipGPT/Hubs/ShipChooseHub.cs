@@ -51,7 +51,6 @@ namespace battleshipGPT.Hubs
 
             if (currentRoom.Player.PlayerShips.Count >= 10)
             {
-                currentRoom.Player.PlayerShipsRemaining = 1;
                 await CreateEnemyPlayground(currentRoom.RoomId.ToString());
             }
         }

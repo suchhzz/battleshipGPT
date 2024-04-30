@@ -381,10 +381,10 @@
                 let selectedCell = getCell(hitPoint.x, hitPoint.y, true); 
 
                 if (isHit) {
-                        selectedCell.style.backgroundColor = "red";
+                        selectedCell.style.backgroundImage = "url('/images/hit-point.png')";
                 }
-                else { 
-                    selectedCell.style.backgroundColor = "black"; 
+                else {
+                        selectedCell.style.backgroundImage = "url('/images/miss-point.png')";
                         rotateArrow(true);
                     setPlayerTurn(false);
                     }
@@ -393,7 +393,7 @@
                 borderPoints.forEach(function (point) { 
                     selectedCell = getCell(point.x, point.y, true);
 
-                    selectedCell.style.backgroundColor = "black";
+                        selectedCell.style.backgroundImage = "url('/images/miss-point.png')";
                     selectedCell.classList.add('occupied');
                 });
 
@@ -408,18 +408,18 @@
                 let selectedCell = getCell(hitPoint.x, hitPoint.y, false);
                     selectedCell.classList.add('occupied');
 
-                if (isHit) {
-                        selectedCell.style.backgroundColor = "red";
+                    if (isHit) {
+                        selectedCell.style.backgroundImage = "url('/images/hit-point.png')";
                 }
-                else {
-                    selectedCell.style.backgroundColor = "black";
+                    else {
+                        selectedCell.style.backgroundImage = "url('/images/miss-point.png')";
                     setPlayerTurn(true);
                     rotateArrow(false);
                     }
                     
                 borderPoints.forEach(function (point) {
-                    selectedCell = getCell(point.x, point.y, false);
-                        selectedCell.style.backgroundColor = "black";
+                        selectedCell = getCell(point.x, point.y, false);
+                        selectedCell.style.backgroundImage = "url('/images/miss-point.png')";
                         selectedCell.classList.add('occupied');
                 });
 

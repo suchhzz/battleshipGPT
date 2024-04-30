@@ -72,7 +72,6 @@ namespace battleshipGPT.Services
                 }
             }
 
-
             return hitPoint;
         }
 

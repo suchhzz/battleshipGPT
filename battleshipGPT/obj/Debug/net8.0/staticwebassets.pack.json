@@ -21,6 +21,14 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
+      "Id": "C:\\Users\\jenje\\source\\repos\\battleshipGPT\\battleshipGPT\\wwwroot\\images\\hit-point.png",
+      "PackagePath": "staticwebassets\\images\\hit-point.png"
+    },
+    {
+      "Id": "C:\\Users\\jenje\\source\\repos\\battleshipGPT\\battleshipGPT\\wwwroot\\images\\miss-point.png",
+      "PackagePath": "staticwebassets\\images\\miss-point.png"
+    },
+    {
       "Id": "C:\\Users\\jenje\\source\\repos\\battleshipGPT\\battleshipGPT\\wwwroot\\js\\battleship.js",
       "PackagePath": "staticwebassets\\js\\battleship.js"
     },
