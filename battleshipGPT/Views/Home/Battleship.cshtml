@@ -316,10 +316,10 @@
     </div>
 
 
-    <script src="~/js/battleship.js"></script>
+    <script src="~/js/battleship-script.js"></script>
     <script>
         var playerShipsData = @Html.Raw(Json.Serialize(Model.Player.PlayerShips));
-        var enemyShipsData = @Html.Raw(Json.Serialize(Model.enemy.EnemyShips));
+        var enemyShipsData = @Html.Raw(Json.Serialize(Model.Enemy.EnemyShips));
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.1/signalr.js"></script>
     

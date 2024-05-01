@@ -1,0 +1,303 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="~/css/ship-choose-style.css">
+    <title>Document</title>
+</head>
+<body>
+
+    <div class="container">
+        <div class="titleHolder">
+            <h1>Your field</h1>
+            <form id="roomIdForm" asp-controller="Home" asp-action="Battleship" method="get">
+                <input type="hidden" id="roomIdInput" name="roomId" value="" />
+                <input type="submit" class="playButt" value="Click to Play!" />
+            </form>
+            <button type="button" class="rotateShip">Rotate Ships</button>
+        </div>
+        <div class="infoForRotationHolder"><p class="infoForRotation">Корабли стоят горизонтально</p></div>
+
+        <table class="board" id="playground">
+            <tbody>
+                <tr>
+                    <td data-row="0" data-col="0" class="cell"></td>
+                    <td data-row="0" data-col="1" class="cell"></td>
+                    <td data-row="0" data-col="2" class="cell"></td>
+                    <td data-row="0" data-col="3" class="cell"></td>
+                    <td data-row="0" data-col="4" class="cell"></td>
+                    <td data-row="0" data-col="5" class="cell"></td>
+                    <td data-row="0" data-col="6" class="cell"></td>
+                    <td data-row="0" data-col="7" class="cell"></td>
+                    <td data-row="0" data-col="8" class="cell"></td>
+                    <td data-row="0" data-col="9" class="cell"></td>
+                </tr>
+
+                <tr>
+                    <td data-row="1" data-col="0" class="cell"></td>
+                    <td data-row="1" data-col="1" class="cell"></td>
+                    <td data-row="1" data-col="2" class="cell"></td>
+                    <td data-row="1" data-col="3" class="cell"></td>
+                    <td data-row="1" data-col="4" class="cell"></td>
+                    <td data-row="1" data-col="5" class="cell"></td>
+                    <td data-row="1" data-col="6" class="cell"></td>
+                    <td data-row="1" data-col="7" class="cell"></td>
+                    <td data-row="1" data-col="8" class="cell"></td>
+                    <td data-row="1" data-col="9" class="cell"></td>
+                </tr>
+
+                <tr>
+                    <td data-row="2" data-col="0" class="cell"></td>
+                    <td data-row="2" data-col="1" class="cell"></td>
+                    <td data-row="2" data-col="2" class="cell"></td>
+                    <td data-row="2" data-col="3" class="cell"></td>
+                    <td data-row="2" data-col="4" class="cell"></td>
+                    <td data-row="2" data-col="5" class="cell"></td>
+                    <td data-row="2" data-col="6" class="cell"></td>
+                    <td data-row="2" data-col="7" class="cell"></td>
+                    <td data-row="2" data-col="8" class="cell"></td>
+                    <td data-row="2" data-col="9" class="cell"></td>
+                </tr>
+
+                <tr>
+                    <td data-row="3" data-col="0" class="cell"></td>
+                    <td data-row="3" data-col="1" class="cell"></td>
+                    <td data-row="3" data-col="2" class="cell"></td>
+                    <td data-row="3" data-col="3" class="cell"></td>
+                    <td data-row="3" data-col="4" class="cell"></td>
+                    <td data-row="3" data-col="5" class="cell"></td>
+                    <td data-row="3" data-col="6" class="cell"></td>
+                    <td data-row="3" data-col="7" class="cell"></td>
+                    <td data-row="3" data-col="8" class="cell"></td>
+                    <td data-row="3" data-col="9" class="cell"></td>
+                </tr>
+
+                <tr>
+                    <td data-row="4" data-col="0" class="cell"></td>
+                    <td data-row="4" data-col="1" class="cell"></td>
+                    <td data-row="4" data-col="2" class="cell"></td>
+                    <td data-row="4" data-col="3" class="cell"></td>
+                    <td data-row="4" data-col="4" class="cell"></td>
+                    <td data-row="4" data-col="5" class="cell"></td>
+                    <td data-row="4" data-col="6" class="cell"></td>
+                    <td data-row="4" data-col="7" class="cell"></td>
+                    <td data-row="4" data-col="8" class="cell"></td>
+                    <td data-row="4" data-col="9" class="cell"></td>
+                </tr>
+
+
+                <tr>
+                    <td data-row="5" data-col="0" class="cell"></td>
+                    <td data-row="5" data-col="1" class="cell"></td>
+                    <td data-row="5" data-col="2" class="cell"></td>
+                    <td data-row="5" data-col="3" class="cell"></td>
+                    <td data-row="5" data-col="4" class="cell"></td>
+                    <td data-row="5" data-col="5" class="cell"></td>
+                    <td data-row="5" data-col="6" class="cell"></td>
+                    <td data-row="5" data-col="7" class="cell"></td>
+                    <td data-row="5" data-col="8" class="cell"></td>
+                    <td data-row="5" data-col="9" class="cell"></td>
+                </tr>
+
+
+                <tr>
+                    <td data-row="6" data-col="0" class="cell"></td>
+                    <td data-row="6" data-col="1" class="cell"></td>
+                    <td data-row="6" data-col="2" class="cell"></td>
+                    <td data-row="6" data-col="3" class="cell"></td>
+                    <td data-row="6" data-col="4" class="cell"></td>
+                    <td data-row="6" data-col="5" class="cell"></td>
+                    <td data-row="6" data-col="6" class="cell"></td>
+                    <td data-row="6" data-col="7" class="cell"></td>
+                    <td data-row="6" data-col="8" class="cell"></td>
+                    <td data-row="6" data-col="9" class="cell"></td>
+                </tr>
+
+
+                <tr>
+                    <td data-row="7" data-col="0" class="cell"></td>
+                    <td data-row="7" data-col="1" class="cell"></td>
+                    <td data-row="7" data-col="2" class="cell"></td>
+                    <td data-row="7" data-col="3" class="cell"></td>
+                    <td data-row="7" data-col="4" class="cell"></td>
+                    <td data-row="7" data-col="5" class="cell"></td>
+                    <td data-row="7" data-col="6" class="cell"></td>
+                    <td data-row="7" data-col="7" class="cell"></td>
+                    <td data-row="7" data-col="8" class="cell"></td>
+                    <td data-row="7" data-col="9" class="cell"></td>
+                </tr>
+
+
+                <tr>
+                    <td data-row="8" data-col="0" class="cell"></td>
+                    <td data-row="8" data-col="1" class="cell"></td>
+                    <td data-row="8" data-col="2" class="cell"></td>
+                    <td data-row="8" data-col="3" class="cell"></td>
+                    <td data-row="8" data-col="4" class="cell"></td>
+                    <td data-row="8" data-col="5" class="cell"></td>
+                    <td data-row="8" data-col="6" class="cell"></td>
+                    <td data-row="8" data-col="7" class="cell"></td>
+                    <td data-row="8" data-col="8" class="cell"></td>
+                    <td data-row="8" data-col="9" class="cell"></td>
+                </tr>
+
+
+                <tr>
+                    <td data-row="9" data-col="0" class="cell"></td>
+                    <td data-row="9" data-col="1" class="cell"></td>
+                    <td data-row="9" data-col="2" class="cell"></td>
+                    <td data-row="9" data-col="3" class="cell"></td>
+                    <td data-row="9" data-col="4" class="cell"></td>
+                    <td data-row="9" data-col="5" class="cell"></td>
+                    <td data-row="9" data-col="6" class="cell"></td>
+                    <td data-row="9" data-col="7" class="cell"></td>
+                    <td data-row="9" data-col="8" class="cell"></td>
+                    <td data-row="9" data-col="9" class="cell"></td>
+                </tr>
+            </tbody>
+        </table>
+
+
+        <div class="shipsSelect">
+
+            <div class="shipsHolder">
+                <table class="ship four-cell-ship" data-decks="4">
+                    <tbody>
+                        <tr>
+                            <td data-row-coloured="y" data-col-coloured="x" data-row="y" data-col="x" class="cellPast"></td>
+                            <td data-row-coloured="y" data-col-coloured="x" data-row="y" data-col="x" class="cellPast"></td>
+                            <td data-row-coloured="y" data-col-coloured="x" data-row="y" data-col="x" class="cellPast"></td>
+                            <td data-row-coloured="y" data-col-coloured="x" data-row="y" data-col="x" class="cellPast"></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <table class="ship three-cell-ship" data-decks="3">
+                    <tbody>
+                        <tr>
+                            <td data-row="y" data-col="x" class="cellPast"></td>
+                            <td data-row="y" data-col="x" class="cellPast"></td>
+                            <td data-row="y" data-col="x" class="cellPast"></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <table class="ship three-cell-ship" data-decks="3">
+                    <tbody>
+                        <tr>
+                            <td data-row="y" data-col="x" class="cellPast"></td>
+                            <td data-row="y" data-col="x" class="cellPast"></td>
+                            <td data-row="y" data-col="x" class="cellPast"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
+            <div class="shipsHolder">
+                <table class="ship two-cell-ship" data-decks="2">
+                    <tbody>
+                        <tr>
+                            <td data-row="y" data-col="x" class="cellPast"></td>
+                            <td data-row="y" data-col="x" class="cellPast"></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <table class="ship two-cell-ship" data-decks="2">
+                    <tbody>
+                        <tr>
+                            <td data-row="y" data-col="x" class="cellPast"></td>
+                            <td data-row="y" data-col="x" class="cellPast"></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <table class="ship two-cell-ship" data-decks="2">
+                    <tbody>
+                        <tr>
+                            <td data-row="y" data-col="x" class="cellPast"></td>
+                            <td data-row="y" data-col="x" class="cellPast"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="shipsHolder">
+                <table class="ship one-cell-ship" data-decks="1">
+                    <tbody>
+                        <tr>
+                            <td data-row="y" data-col="x" class="cellPast"></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <table class="ship one-cell-ship" data-decks="1">
+                    <tbody>
+                        <tr>
+                            <td data-row="y" data-col="x" class="cellPast"></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <table class="ship one-cell-ship" data-decks="1">
+                    <tbody>
+                        <tr>
+                            <td data-row="y" data-col="x" class="cellPast"></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <table class="ship one-cell-ship" data-decks="1">
+                    <tbody>
+                        <tr>
+                            <td data-row="y" data-col="x" class="cellPast"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+  <script src="~/js/ship-choose-script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.1/signalr.js"></script>
+    <script>
+
+        let userId;
+        let roomId;
+
+        const hubConnection = new signalR.HubConnectionBuilder()
+            .withUrl("/choose")
+            .build();
+
+        function setPoint(col, row, currentDeck, horizontal) {
+            console.log("setPoint invoked: col: " + col + " row: " + row + " deck: " + currentDeck + " horizontal: " + horizontal);
+
+            hubConnection.invoke("SetShip", roomId, parseInt(col), parseInt(row), parseInt(currentDeck), horizontal);
+        }
+    
+
+            hubConnection.start()
+            .then(function () {
+                hubConnection.on("SetParameters", function (userIdFromServer, roomIdFromServer) {
+                    userId = userIdFromServer;
+                    roomId = roomIdFromServer;
+
+                    console.log("user id: " + userId);
+                    console.log("room id: " + roomId);
+                });
+
+                hubConnection.on("StartGame", function () {
+                    document.getElementById("roomIdInput").value = roomId;
+                });
+
+                hubConnection.invoke("SetUsersParameters");
+            })
+            .catch(function (err) {
+                console.error(err.toString());
+            });
+
+    </script>
+</body>
+</html>

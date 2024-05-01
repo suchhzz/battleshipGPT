@@ -7,6 +7,6 @@ namespace battleshipGPT.Models.MainModels
     {
         public Guid RoomId { get; set; }
         public Player Player { get; set; }
-        public Enemy enemy { get; set; }
+        public Enemy Enemy { get; set; }
     }
 }

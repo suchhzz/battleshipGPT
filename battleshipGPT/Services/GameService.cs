@@ -7,13 +7,13 @@ namespace battleshipGPT.Services
     {
         public void SetPoint(Room room, int x, int y)
         {
-            var selectedShip = ShipHitCheck(room.enemy.EnemyShips, x, y);
+            var selectedShip = ShipHitCheck(room.Enemy.EnemyShips, x, y);
 
             if (selectedShip != null)
             {
                 if (selectedShip.Destroyed)
                 {
-                    room.enemy.EnemyShipsRemaining--;
+                    room.Enemy.EnemyShipsRemaining--;
                 }
             }
         }
@@ -31,7 +31,7 @@ namespace battleshipGPT.Services
 
             if (isPlayerMoves)
             {
-                hitShip = ShipHitCheck(room.enemy.EnemyShips, x, y);
+                hitShip = ShipHitCheck(room.Enemy.EnemyShips, x, y);
             }
             else
             {
@@ -44,7 +44,7 @@ namespace battleshipGPT.Services
 
                 if (!isPlayerMoves)
                 {
-                    room.enemy.EnemyHitCoordinates.Add(new Coordinates { X = x, Y = y });
+                    room.Enemy.EnemyHitCoordinates.Add(new Coordinates { X = x, Y = y });
                 }
 
                 if (hitShip.Destroyed)
@@ -53,21 +53,21 @@ namespace battleshipGPT.Services
 
                     if (isPlayerMoves)
                     {
-                        room.enemy.EnemyShipsRemaining--;
+                        room.Enemy.EnemyShipsRemaining--;
                     }
                     else
                     {
                         room.Player.PlayerShipsRemaining--;
 
-                        room.enemy.UsedCoordinates.AddRange(hitPoint.BorderCoords);
-                        room.enemy.UsedCoordinates = room.enemy.UsedCoordinates.Distinct().ToList();
+                        room.Enemy.UsedCoordinates.AddRange(hitPoint.BorderCoords);
+                        room.Enemy.UsedCoordinates = room.Enemy.UsedCoordinates.Distinct().ToList();
                         
                         foreach (var usedCoords in hitPoint.BorderCoords)
                         {
-                            room.enemy.AvailableCoordinates.Remove(usedCoords);
+                            room.Enemy.AvailableCoordinates.Remove(usedCoords);
                         }
 
-                        room.enemy.EnemyHitCoordinates.Clear();
+                        room.Enemy.EnemyHitCoordinates.Clear();
                     }
                 }
             }
@@ -157,9 +157,9 @@ namespace battleshipGPT.Services
 
             while (!setPoint)
             {
-                if (room.enemy.EnemyHitCoordinates.Count != 0)
+                if (room.Enemy.EnemyHitCoordinates.Count != 0)
                 {
-                    enemyRandomCoord = generateRandomDirection(room.enemy.EnemyHitCoordinates);
+                    enemyRandomCoord = generateRandomDirection(room.Enemy.EnemyHitCoordinates);
 
                     if (checkBorder(enemyRandomCoord) && checkShipBorders(room, enemyRandomCoord))
                     {
@@ -171,13 +171,13 @@ namespace battleshipGPT.Services
                 {
                     var rnd = new Random();
 
-                    enemyRandomCoord = room.enemy.AvailableCoordinates[rnd.Next(0, room.enemy.AvailableCoordinates.Count)];
+                    enemyRandomCoord = room.Enemy.AvailableCoordinates[rnd.Next(0, room.Enemy.AvailableCoordinates.Count)];
 
                     setPoint = true;
                 }
             }
-            room.enemy.UsedCoordinates.Add(enemyRandomCoord);
-            room.enemy.AvailableCoordinates.Remove(enemyRandomCoord);
+            room.Enemy.UsedCoordinates.Add(enemyRandomCoord);
+            room.Enemy.AvailableCoordinates.Remove(enemyRandomCoord);
 
             return enemyRandomCoord;
         }
@@ -306,7 +306,7 @@ namespace battleshipGPT.Services
 
         private bool checkShipBorders(Room room, Coordinates coords)
         {
-            return !(room.enemy.UsedCoordinates.FirstOrDefault(c => c.X == coords.X && c.Y == coords.Y) != null);
+            return !(room.Enemy.UsedCoordinates.FirstOrDefault(c => c.X == coords.X && c.Y == coords.Y) != null);
         }
     }
 }

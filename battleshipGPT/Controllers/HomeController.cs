@@ -17,17 +17,14 @@ namespace battleshipGPT.Controllers
             _roomService = roomService;
         }
 
-        public IActionResult Index()
+        public IActionResult ShipChoose()
         {
             return View();
         }
 
         public IActionResult Battleship(string roomId)
         {
-
            var currentRoom = _roomService.GetRoomById(Guid.Parse(roomId));
-
-           // var currentRoom = _roomService.GetTestRoom();
 
             _logger.LogInformation("roomId: " + currentRoom.RoomId); 
 

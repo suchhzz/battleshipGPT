@@ -28,8 +28,6 @@ namespace battleshipGPT.Hubs
 
             var hitPointModel = _gameService.GetHitCoord(currentRoom, selectedCol, selectedRow, true);
 
-            _logger.LogInformation($"hitPointModel: is hit: {hitPointModel.isHit} hit coords: {hitPointModel.HitCoords.X} borderCoords: {hitPointModel.BorderCoords.Count}");
-
             await Clients.Groups(roomId).SendAsync("SetClientPoint", hitPointModel.isHit, hitPointModel.HitCoords, hitPointModel.BorderCoords);
 
             await CheckWinner(roomId);
@@ -41,11 +39,7 @@ namespace battleshipGPT.Hubs
 
             var enemyRandomPoint = _gameService.EnemySetPoint(currentRoom);
 
-            _logger.LogInformation($"enemy chose: x: {enemyRandomPoint.X} y: {enemyRandomPoint.Y}");
-
             var enemyHitPoint = _gameService.GetHitCoord(currentRoom, enemyRandomPoint.X, enemyRandomPoint.Y, false);
-
-            _logger.LogInformation($"hitPointModel: is hit: {enemyHitPoint.isHit} hit coords: x: {enemyHitPoint.HitCoords.X} y: {enemyHitPoint.HitCoords.Y} borderCoords: {enemyHitPoint.BorderCoords.Count}");
 
             await Clients.Group(roomId).SendAsync("SetEnemyPoint", enemyHitPoint.isHit, enemyHitPoint.HitCoords, enemyHitPoint.BorderCoords);
 
@@ -56,7 +50,7 @@ namespace battleshipGPT.Hubs
         {
             var currentRoom = _roomService.GetRoomById(Guid.Parse(roomId));
 
-            if (currentRoom.enemy.EnemyShipsRemaining == 0)
+            if (currentRoom.Enemy.EnemyShipsRemaining == 0)
             {
                 await Clients.Group(roomId).SendAsync("GameOver", true);
             }

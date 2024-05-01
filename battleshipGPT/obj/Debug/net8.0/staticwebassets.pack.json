@@ -9,12 +9,8 @@
       "PackagePath": "staticwebassets\\css\\battleship-style.css"
     },
     {
-      "Id": "C:\\Users\\jenje\\source\\repos\\battleshipGPT\\battleshipGPT\\wwwroot\\css\\site.css",
-      "PackagePath": "staticwebassets\\css\\site.css"
-    },
-    {
-      "Id": "C:\\Users\\jenje\\source\\repos\\battleshipGPT\\battleshipGPT\\wwwroot\\css\\style.css",
-      "PackagePath": "staticwebassets\\css\\style.css"
+      "Id": "C:\\Users\\jenje\\source\\repos\\battleshipGPT\\battleshipGPT\\wwwroot\\css\\ship-choose-style.css",
+      "PackagePath": "staticwebassets\\css\\ship-choose-style.css"
     },
     {
       "Id": "C:\\Users\\jenje\\source\\repos\\battleshipGPT\\battleshipGPT\\wwwroot\\favicon.ico",
@@ -29,16 +25,12 @@
       "PackagePath": "staticwebassets\\images\\miss-point.png"
     },
     {
-      "Id": "C:\\Users\\jenje\\source\\repos\\battleshipGPT\\battleshipGPT\\wwwroot\\js\\battleship.js",
-      "PackagePath": "staticwebassets\\js\\battleship.js"
+      "Id": "C:\\Users\\jenje\\source\\repos\\battleshipGPT\\battleshipGPT\\wwwroot\\js\\battleship-script.js",
+      "PackagePath": "staticwebassets\\js\\battleship-script.js"
     },
     {
-      "Id": "C:\\Users\\jenje\\source\\repos\\battleshipGPT\\battleshipGPT\\wwwroot\\js\\script.js",
-      "PackagePath": "staticwebassets\\js\\script.js"
-    },
-    {
-      "Id": "C:\\Users\\jenje\\source\\repos\\battleshipGPT\\battleshipGPT\\wwwroot\\js\\site.js",
-      "PackagePath": "staticwebassets\\js\\site.js"
+      "Id": "C:\\Users\\jenje\\source\\repos\\battleshipGPT\\battleshipGPT\\wwwroot\\js\\ship-choose-script.js",
+      "PackagePath": "staticwebassets\\js\\ship-choose-script.js"
     },
     {
       "Id": "C:\\Users\\jenje\\source\\repos\\battleshipGPT\\battleshipGPT\\wwwroot\\lib\\bootstrap\\LICENSE",

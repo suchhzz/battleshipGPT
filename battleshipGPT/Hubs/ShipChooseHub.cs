@@ -47,8 +47,6 @@ namespace battleshipGPT.Hubs
                 _shipChooseService.SetShip(currentRoom, x, y, deck, horizontal);
             }
 
-            _logger.LogInformation($"player ships: {currentRoom.Player.PlayerShips.Count}");
-
             if (currentRoom.Player.PlayerShips.Count >= 10)
             {
                 await CreateEnemyPlayground(currentRoom.RoomId.ToString());
@@ -66,7 +64,7 @@ namespace battleshipGPT.Hubs
 
 
                 _logger.LogInformation("\n\nenemy field:");
-                _logService.showField(currentRoom.enemy.EnemyShips, "enemy");
+                _logService.showField(currentRoom.Enemy.EnemyShips, "enemy");
 
 
                 _logger.LogInformation("\n\nplayer`s field:");
@@ -76,12 +74,5 @@ namespace battleshipGPT.Hubs
 
             await Clients.Group(roomId).SendAsync("StartGame");
         }
-
-        public async Task Test(string roomId)
-        {
-            _logger.LogInformation("test method has been invoked, roomId: " + roomId);
-        }
-
-        
     }
 }
